@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/anchore/refs/heads/main/json-schema/anchore-image-schema.json",
+  "title": "Anchore Image",
+  "description": "Schema for a container image analyzed by Anchore Enterprise",
+  "type": "object",
+  "properties": {
+    "imageDigest": {
+      "type": "string",
+      "description": "SHA256 digest of the image"
+    },
+    "analysisStatus": {
+      "type": "string",
+      "enum": [
+        "not_analyzed",
+        "analyzing",
+        "analyzed",
+        "analysis_failed"
+      ]
+    },
+    "imageStatus": {
+      "type": "string",
+      "enum": [
+        "active",
+        "inactive",
+        "deleting"
+      ]
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "imageContent": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "properties": {
+            "arch": {
+              "type": "string"
+            },
+            "distro": {
+              "type": "string"
+            },
+            "distroVersion": {
+              "type": "string"
+            },
+            "imageSize": {
+              "type": "integer"
+            },
+            "layerCount": {
+              "type": "integer"
+            }
+          }
+        }
+      }
+    }
+  },
+  "required": [
+    "imageDigest",
+    "analysisStatus"
+  ]
+}

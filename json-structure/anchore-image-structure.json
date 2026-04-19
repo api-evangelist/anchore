@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-structure.org/meta/extended/v0/#",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/anchore/refs/heads/main/json-structure/anchore-image-structure.json",
+  "title": "Anchore Image",
+  "type": "record",
+  "fields": {
+    "imageDigest": {
+      "type": "string"
+    },
+    "analysisStatus": {
+      "type": "string"
+    },
+    "imageStatus": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "datetime"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "datetime"
+    },
+    "imageContent": {
+      "type": "record",
+      "fields": {
+        "metadata": {
+          "type": "record",
+          "fields": {
+            "arch": {
+              "type": "string"
+            },
+            "distro": {
+              "type": "string"
+            },
+            "distroVersion": {
+              "type": "string"
+            },
+            "imageSize": {
+              "type": "int32"
+            },
+            "layerCount": {
+              "type": "int32"
+            }
+          }
+        }
+      }
+    }
+  }
+}

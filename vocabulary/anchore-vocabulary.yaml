@@ -1,0 +1,99 @@
+name: Anchore Vocabulary
+description: Vocabulary for the Anchore container security ecosystem
+version: '1.0'
+created: '2026-04-19'
+modified: '2026-04-19'
+
+operational:
+  apis:
+    - name: Anchore Enterprise API
+      version: '2.0'
+      resources:
+        - name: Images
+          operations:
+            - listImages
+            - addImage
+            - getImage
+        - name: Vulnerabilities
+          operations:
+            - getImageVulnerabilities
+        - name: Policies
+          operations:
+            - listPolicies
+            - createPolicy
+            - checkImagePolicy
+        - name: SBOM
+          operations:
+            - getImageSbom
+        - name: Subscriptions
+          operations:
+            - listSubscriptions
+            - createSubscription
+        - name: Registries
+          operations:
+            - listRegistries
+
+  schemas:
+    - AnchoreImage
+    - ImageAnalysisRequest
+    - Vulnerability
+    - VulnerabilityReport
+    - PolicyEvaluation
+    - Policy
+    - PolicyRule
+    - SBOM
+    - SBOMComponent
+    - Subscription
+    - RegistryConfiguration
+
+capability:
+  workflows:
+    - scan-and-report
+    - generate-sbom
+
+  personas:
+    - id: devsecops-engineer
+      label: DevSecOps Engineer
+      description: Engineers who integrate security scanning into CI/CD pipelines
+    - id: security-analyst
+      label: Security Analyst
+      description: Security professionals who review vulnerability reports and set policies
+    - id: platform-engineer
+      label: Platform Engineer
+      description: Engineers who manage Kubernetes clusters with admission control policies
+    - id: compliance-officer
+      label: Compliance Officer
+      description: Compliance professionals who require SBOM and policy audit trails
+
+concepts:
+  - id: sbom
+    label: SBOM
+    fullName: Software Bill of Materials
+    description: An inventory of all components in a software artifact, including containers
+    formats:
+      - CycloneDX
+      - SPDX
+
+  - id: vulnerability-scan
+    label: Vulnerability Scan
+    description: The process of analyzing an image against known vulnerability databases
+
+  - id: policy-evaluation
+    label: Policy Evaluation
+    description: Comparing image analysis results against defined compliance rules; result is stop/warn/go
+
+  - id: image-digest
+    label: Image Digest
+    description: Cryptographic SHA256 hash uniquely identifying a container image layer set
+
+  - id: syft
+    label: Syft
+    description: Open source SBOM generator for container images and filesystems (by Anchore)
+
+  - id: grype
+    label: Grype
+    description: Open source vulnerability scanner powered by the Grype vulnerability database (by Anchore)
+
+  - id: purl
+    label: Package URL (PURL)
+    description: Standard for uniquely identifying software packages across ecosystems

@@ -1,0 +1,80 @@
+rules:
+  anchore-openapi-info-description:
+    description: OpenAPI info object must have a description
+    message: 'Info object must have a description'
+    given: '$.info'
+    severity: error
+    then:
+      field: description
+      function: truthy
+
+  anchore-openapi-info-version:
+    description: OpenAPI info object must have a version
+    message: 'Info object must have a version'
+    given: '$.info'
+    severity: error
+    then:
+      field: version
+      function: truthy
+
+  anchore-operation-operationId:
+    description: Every operation must have an operationId
+    message: 'Operation must have an operationId'
+    given: '$.paths[*][get,post,put,patch,delete]'
+    severity: error
+    then:
+      field: operationId
+      function: truthy
+
+  anchore-operation-summary:
+    description: Every operation must have a summary
+    message: 'Operation must have a summary'
+    given: '$.paths[*][get,post,put,patch,delete]'
+    severity: warn
+    then:
+      field: summary
+      function: truthy
+
+  anchore-response-200:
+    description: Every GET operation must have a 200 response
+    message: 'GET operations must define a 200 response'
+    given: '$.paths[*].get.responses'
+    severity: warn
+    then:
+      field: '200'
+      function: truthy
+
+  anchore-security-defined:
+    description: API must define security requirements
+    message: 'API must define global security'
+    given: '$'
+    severity: error
+    then:
+      field: security
+      function: truthy
+
+  anchore-schema-type:
+    description: Schema properties must have a type
+    message: 'Schema property must have a type'
+    given: '$.components.schemas[*].properties[*]'
+    severity: warn
+    then:
+      field: type
+      function: truthy
+
+  anchore-severity-enum:
+    description: Vulnerability severity must use standard values
+    message: 'Severity must be one of Critical, High, Medium, Low, Negligible, Unknown'
+    given: "$.components.schemas.Vulnerability.properties.severity"
+    severity: warn
+    then:
+      function: truthy
+
+  anchore-digest-format:
+    description: Image digest fields should follow SHA256 format
+    message: 'imageDigest should be a string type'
+    given: "$.components.schemas[*].properties.imageDigest"
+    severity: hint
+    then:
+      field: type
+      function: truthy

@@ -1,0 +1,64 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "schema": "https://schema.org/",
+    "anchore": "https://raw.githubusercontent.com/api-evangelist/anchore/refs/heads/main/vocabulary/",
+    "imageDigest": {
+      "@id": "anchore:imageDigest",
+      "@type": "xsd:string"
+    },
+    "analysisStatus": {
+      "@id": "anchore:analysisStatus",
+      "@type": "xsd:string"
+    },
+    "imageStatus": {
+      "@id": "anchore:imageStatus",
+      "@type": "xsd:string"
+    },
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "xsd:dateTime"
+    },
+    "updatedAt": {
+      "@id": "schema:dateModified",
+      "@type": "xsd:dateTime"
+    },
+    "vuln": {
+      "@id": "anchore:vulnerabilityId",
+      "@type": "xsd:string"
+    },
+    "severity": {
+      "@id": "anchore:severity",
+      "@type": "xsd:string"
+    },
+    "package": {
+      "@id": "schema:name",
+      "@type": "xsd:string"
+    },
+    "packageVersion": {
+      "@id": "schema:version",
+      "@type": "xsd:string"
+    },
+    "fix": {
+      "@id": "anchore:fixedVersion",
+      "@type": "xsd:string"
+    },
+    "components": {
+      "@id": "anchore:components",
+      "@container": "@set"
+    },
+    "bomFormat": {
+      "@id": "anchore:bomFormat",
+      "@type": "xsd:string"
+    },
+    "purl": {
+      "@id": "anchore:packageUrl",
+      "@type": "@id"
+    },
+    "licenses": {
+      "@id": "schema:license",
+      "@container": "@set"
+    }
+  }
+}
