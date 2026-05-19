@@ -1,0 +1,105 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Anchore Enterprise API — Subscriptions
+  description: 'Anchore Enterprise API — Subscriptions. 2 operations. Lead operation: Anchore Enterprise List Subscriptions.
+    Self-contained Naftiko capability covering one Anchore business surface.'
+  tags:
+  - Anchore
+  - Subscriptions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ANCHORE_API_KEY: ANCHORE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: enterprise-subscriptions
+    baseUri: https://anchore.example.com/v2
+    description: Anchore Enterprise API — Subscriptions business capability. Self-contained, no shared references.
+    resources:
+    - name: subscriptions
+      path: /subscriptions
+      operations:
+      - name: listsubscriptions
+        method: GET
+        description: Anchore Enterprise List Subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createsubscription
+        method: POST
+        description: Anchore Enterprise Create Subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.ANCHORE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: enterprise-subscriptions-rest
+    port: 8080
+    description: REST adapter for Anchore Enterprise API — Subscriptions. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/subscriptions
+      name: subscriptions
+      description: REST surface for subscriptions.
+      operations:
+      - method: GET
+        name: listsubscriptions
+        description: Anchore Enterprise List Subscriptions
+        call: enterprise-subscriptions.listsubscriptions
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createsubscription
+        description: Anchore Enterprise Create Subscription
+        call: enterprise-subscriptions.createsubscription
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: enterprise-subscriptions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Anchore Enterprise API — Subscriptions. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: anchore-enterprise-list-subscriptions
+      description: Anchore Enterprise List Subscriptions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: enterprise-subscriptions.listsubscriptions
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: anchore-enterprise-create-subscription
+      description: Anchore Enterprise Create Subscription
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: enterprise-subscriptions.createsubscription
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

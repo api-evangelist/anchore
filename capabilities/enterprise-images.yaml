@@ -1,0 +1,160 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Anchore Enterprise API — Images
+  description: 'Anchore Enterprise API — Images. 3 operations. Lead operation: Anchore Enterprise List Images. Self-contained
+    Naftiko capability covering one Anchore business surface.'
+  tags:
+  - Anchore
+  - Images
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ANCHORE_API_KEY: ANCHORE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: enterprise-images
+    baseUri: https://anchore.example.com/v2
+    description: Anchore Enterprise API — Images business capability. Self-contained, no shared references.
+    resources:
+    - name: images
+      path: /images
+      operations:
+      - name: listimages
+        method: GET
+        description: Anchore Enterprise List Images
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: tag
+          in: query
+          type: string
+          description: Filter by image tag
+        - name: image_status
+          in: query
+          type: string
+      - name: addimage
+        method: POST
+        description: Anchore Enterprise Add Image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: images-imageDigest
+      path: /images/{imageDigest}
+      operations:
+      - name: getimage
+        method: GET
+        description: Anchore Enterprise Get Image
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: imageDigest
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.ANCHORE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: enterprise-images-rest
+    port: 8080
+    description: REST adapter for Anchore Enterprise API — Images. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/images
+      name: images
+      description: REST surface for images.
+      operations:
+      - method: GET
+        name: listimages
+        description: Anchore Enterprise List Images
+        call: enterprise-images.listimages
+        with:
+          tag: rest.tag
+          image_status: rest.image_status
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: addimage
+        description: Anchore Enterprise Add Image
+        call: enterprise-images.addimage
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/images/{imagedigest}
+      name: images-imagedigest
+      description: REST surface for images-imageDigest.
+      operations:
+      - method: GET
+        name: getimage
+        description: Anchore Enterprise Get Image
+        call: enterprise-images.getimage
+        with:
+          imageDigest: rest.imageDigest
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: enterprise-images-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Anchore Enterprise API — Images. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: anchore-enterprise-list-images
+      description: Anchore Enterprise List Images
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: enterprise-images.listimages
+      with:
+        tag: tools.tag
+        image_status: tools.image_status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: anchore-enterprise-add-image
+      description: Anchore Enterprise Add Image
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: enterprise-images.addimage
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: anchore-enterprise-get-image
+      description: Anchore Enterprise Get Image
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: enterprise-images.getimage
+      with:
+        imageDigest: tools.imageDigest
+      outputParameters:
+      - type: object
+        mapping: $.

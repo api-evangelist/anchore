@@ -1,0 +1,156 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Anchore Enterprise API — Policies
+  description: 'Anchore Enterprise API — Policies. 3 operations. Lead operation: Anchore Enterprise Check Image Policy. Self-contained
+    Naftiko capability covering one Anchore business surface.'
+  tags:
+  - Anchore
+  - Policies
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ANCHORE_API_KEY: ANCHORE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: enterprise-policies
+    baseUri: https://anchore.example.com/v2
+    description: Anchore Enterprise API — Policies business capability. Self-contained, no shared references.
+    resources:
+    - name: images-imageDigest-check
+      path: /images/{imageDigest}/check
+      operations:
+      - name: checkimagepolicy
+        method: GET
+        description: Anchore Enterprise Check Image Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: imageDigest
+          in: path
+          type: string
+          required: true
+        - name: policyId
+          in: query
+          type: string
+        - name: tag
+          in: query
+          type: string
+    - name: policies
+      path: /policies
+      operations:
+      - name: listpolicies
+        method: GET
+        description: Anchore Enterprise List Policies
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createpolicy
+        method: POST
+        description: Anchore Enterprise Create Policy
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.ANCHORE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: enterprise-policies-rest
+    port: 8080
+    description: REST adapter for Anchore Enterprise API — Policies. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/images/{imagedigest}/check
+      name: images-imagedigest-check
+      description: REST surface for images-imageDigest-check.
+      operations:
+      - method: GET
+        name: checkimagepolicy
+        description: Anchore Enterprise Check Image Policy
+        call: enterprise-policies.checkimagepolicy
+        with:
+          imageDigest: rest.imageDigest
+          policyId: rest.policyId
+          tag: rest.tag
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/policies
+      name: policies
+      description: REST surface for policies.
+      operations:
+      - method: GET
+        name: listpolicies
+        description: Anchore Enterprise List Policies
+        call: enterprise-policies.listpolicies
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createpolicy
+        description: Anchore Enterprise Create Policy
+        call: enterprise-policies.createpolicy
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: enterprise-policies-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Anchore Enterprise API — Policies. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: anchore-enterprise-check-image-policy
+      description: Anchore Enterprise Check Image Policy
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: enterprise-policies.checkimagepolicy
+      with:
+        imageDigest: tools.imageDigest
+        policyId: tools.policyId
+        tag: tools.tag
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: anchore-enterprise-list-policies
+      description: Anchore Enterprise List Policies
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: enterprise-policies.listpolicies
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: anchore-enterprise-create-policy
+      description: Anchore Enterprise Create Policy
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: enterprise-policies.createpolicy
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

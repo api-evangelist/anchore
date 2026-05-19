@@ -1,0 +1,79 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Anchore Enterprise API — SBOM
+  description: 'Anchore Enterprise API — SBOM. 1 operations. Lead operation: Anchore Enterprise Get Image SBOM. Self-contained
+    Naftiko capability covering one Anchore business surface.'
+  tags:
+  - Anchore
+  - SBOM
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ANCHORE_API_KEY: ANCHORE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: enterprise-sbom
+    baseUri: https://anchore.example.com/v2
+    description: Anchore Enterprise API — SBOM business capability. Self-contained, no shared references.
+    resources:
+    - name: images-imageDigest-sbom
+      path: /images/{imageDigest}/sbom
+      operations:
+      - name: getimagesbom
+        method: GET
+        description: Anchore Enterprise Get Image SBOM
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: imageDigest
+          in: path
+          type: string
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.ANCHORE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: enterprise-sbom-rest
+    port: 8080
+    description: REST adapter for Anchore Enterprise API — SBOM. One Spectral-compliant resource per consumed operation, prefixed
+      with /v1.
+    resources:
+    - path: /v1/images/{imagedigest}/sbom
+      name: images-imagedigest-sbom
+      description: REST surface for images-imageDigest-sbom.
+      operations:
+      - method: GET
+        name: getimagesbom
+        description: Anchore Enterprise Get Image SBOM
+        call: enterprise-sbom.getimagesbom
+        with:
+          imageDigest: rest.imageDigest
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: enterprise-sbom-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Anchore Enterprise API — SBOM. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: anchore-enterprise-get-image-sbom
+      description: Anchore Enterprise Get Image SBOM
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: enterprise-sbom.getimagesbom
+      with:
+        imageDigest: tools.imageDigest
+      outputParameters:
+      - type: object
+        mapping: $.

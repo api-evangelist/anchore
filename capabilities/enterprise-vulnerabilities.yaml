@@ -1,0 +1,90 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Anchore Enterprise API — Vulnerabilities
+  description: 'Anchore Enterprise API — Vulnerabilities. 1 operations. Lead operation: Anchore Enterprise Get Image Vulnerabilities.
+    Self-contained Naftiko capability covering one Anchore business surface.'
+  tags:
+  - Anchore
+  - Vulnerabilities
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    ANCHORE_API_KEY: ANCHORE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: enterprise-vulnerabilities
+    baseUri: https://anchore.example.com/v2
+    description: Anchore Enterprise API — Vulnerabilities business capability. Self-contained, no shared references.
+    resources:
+    - name: images-imageDigest-vuln-vtype
+      path: /images/{imageDigest}/vuln/{vtype}
+      operations:
+      - name: getimagevulnerabilities
+        method: GET
+        description: Anchore Enterprise Get Image Vulnerabilities
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: imageDigest
+          in: path
+          type: string
+          required: true
+        - name: vtype
+          in: path
+          type: string
+          required: true
+        - name: force_refresh
+          in: query
+          type: boolean
+    authentication:
+      type: bearer
+      token: '{{env.ANCHORE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: enterprise-vulnerabilities-rest
+    port: 8080
+    description: REST adapter for Anchore Enterprise API — Vulnerabilities. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/images/{imagedigest}/vuln/{vtype}
+      name: images-imagedigest-vuln-vtype
+      description: REST surface for images-imageDigest-vuln-vtype.
+      operations:
+      - method: GET
+        name: getimagevulnerabilities
+        description: Anchore Enterprise Get Image Vulnerabilities
+        call: enterprise-vulnerabilities.getimagevulnerabilities
+        with:
+          imageDigest: rest.imageDigest
+          vtype: rest.vtype
+          force_refresh: rest.force_refresh
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: enterprise-vulnerabilities-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Anchore Enterprise API — Vulnerabilities. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: anchore-enterprise-get-image-vulnerabilities
+      description: Anchore Enterprise Get Image Vulnerabilities
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: enterprise-vulnerabilities.getimagevulnerabilities
+      with:
+        imageDigest: tools.imageDigest
+        vtype: tools.vtype
+        force_refresh: tools.force_refresh
+      outputParameters:
+      - type: object
+        mapping: $.
