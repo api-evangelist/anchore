@@ -134,6 +134,8 @@ common:
 - name: MCP Server
   url: https://github.com/anchore/grype-mcp
   type: MCPServer
+- type: LLMsTxt
+  url: https://docs.anchore.com/llms.txt
 integrations:
 - name: Anchore
 - name: Icon
