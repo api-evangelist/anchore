@@ -1,0 +1,109 @@
+arazzo: 1.0.1
+info:
+  title: Anchore Image SBOM and Vulnerability Pull
+  summary: Confirm an image is analyzed, then export its CycloneDX SBOM and its vulnerability report for downstream compliance use.
+  description: >-
+    A supply-chain evidence pattern. The workflow reads the image record to
+    confirm the analysisStatus is analyzed and branches to stop early when the
+    image is not yet ready, then exports the CycloneDX Software Bill of
+    Materials and pulls the vulnerability report so both artifacts can be filed
+    together as compliance evidence. Every step spells out its request inline so
+    the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: anchoreApi
+  url: ../openapi/anchore-enterprise-api.yaml
+  type: openapi
+workflows:
+- workflowId: image-sbom-and-vulns
+  summary: Verify analysis, then export the SBOM and vulnerability report for an image.
+  description: >-
+    Confirms the image is analyzed and, when ready, retrieves the CycloneDX SBOM
+    and the vulnerability report for the supplied image digest.
+  inputs:
+    type: object
+    required:
+    - authorization
+    - imageDigest
+    properties:
+      authorization:
+        type: string
+        description: HTTP Basic authorization header value (e.g. "Basic dXNlcjpwYXNz").
+      imageDigest:
+        type: string
+        description: The SHA256 digest of the image to export evidence for.
+      vtype:
+        type: string
+        description: Vulnerability type to report (os, non-os, or all). Defaults to all.
+  steps:
+  - stepId: confirmAnalyzed
+    description: >-
+      Read the image record and branch on analysisStatus. Continue to the SBOM
+      export only when the image has finished analysis.
+    operationId: getImage
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    - name: imageDigest
+      in: path
+      value: $inputs.imageDigest
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      analysisStatus: $response.body#/analysisStatus
+    onSuccess:
+    - name: analyzed
+      type: goto
+      stepId: exportSbom
+      criteria:
+      - context: $response.body
+        condition: $.analysisStatus == "analyzed"
+        type: jsonpath
+    - name: notReady
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.analysisStatus != "analyzed"
+        type: jsonpath
+  - stepId: exportSbom
+    description: >-
+      Retrieve the CycloneDX Software Bill of Materials for the analyzed image.
+    operationId: getImageSbom
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    - name: imageDigest
+      in: path
+      value: $inputs.imageDigest
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      bomFormat: $response.body#/bomFormat
+      serialNumber: $response.body#/serialNumber
+      components: $response.body#/components
+  - stepId: pullVulnerabilities
+    description: >-
+      Retrieve the vulnerability report so it can be filed alongside the SBOM as
+      compliance evidence.
+    operationId: getImageVulnerabilities
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    - name: imageDigest
+      in: path
+      value: $inputs.imageDigest
+    - name: vtype
+      in: path
+      value: $inputs.vtype
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      vulnerabilities: $response.body#/vulnerabilities
+  outputs:
+    serialNumber: $steps.exportSbom.outputs.serialNumber
+    components: $steps.exportSbom.outputs.components
+    vulnerabilities: $steps.pullVulnerabilities.outputs.vulnerabilities

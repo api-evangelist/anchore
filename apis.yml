@@ -62,6 +62,27 @@ apis:
   - type: NaftikoCapability
     url: capabilities/enterprise-vulnerabilities.yaml
 common:
+- type: ArazzoWorkflows
+  url: arazzo/
+  workflows:
+  - url: arazzo/anchore-analyze-image-workflow.yml
+    name: Anchore Analyze Image End to End
+    summary: Submit a container image for analysis, poll until analyzed, then pull its vulnerabilities and policy evaluation.
+  - url: arazzo/anchore-create-policy-and-evaluate-workflow.yml
+    name: Anchore Create Policy and Evaluate Image
+    summary: Create a new security policy, then immediately evaluate an analyzed image against it to observe the gate result.
+  - url: arazzo/anchore-image-sbom-and-vulns-workflow.yml
+    name: Anchore Image SBOM and Vulnerability Pull
+    summary: Confirm an image is analyzed, then export its CycloneDX SBOM and its vulnerability report for downstream compliance use.
+  - url: arazzo/anchore-registry-scan-workflow.yml
+    name: Anchore Registry Image Onboarding
+    summary: Confirm a registry is configured, then submit an image from it for analysis and confirm the queue.
+  - url: arazzo/anchore-rescan-active-images-workflow.yml
+    name: Anchore Rescan Active Image and Gate
+    summary: Find an active analyzed image by tag, force a fresh vulnerability scan, and gate it against policy.
+  - url: arazzo/anchore-subscribe-on-policy-fail-workflow.yml
+    name: Anchore Subscribe on Policy Failure
+    summary: Evaluate an analyzed image against policy and, when it fails the gate, subscribe to ongoing policy-evaluation notifications for its tag.
 - type: LinkedIn
   url: https://www.linkedin.com/company/anchore
 - type: Portal

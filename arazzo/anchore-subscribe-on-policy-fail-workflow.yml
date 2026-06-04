@@ -1,0 +1,103 @@
+arazzo: 1.0.1
+info:
+  title: Anchore Subscribe on Policy Failure
+  summary: Evaluate an analyzed image against policy and, when it fails the gate, subscribe to ongoing policy-evaluation notifications for its tag.
+  description: >-
+    A remediation-tracking pattern. The workflow evaluates an already-analyzed
+    image against the policy bundle and branches on the final gate action: when
+    the action is "stop" (a policy failure) it creates a policy_eval
+    subscription on the image tag so the team is notified whenever the
+    evaluation result changes as fixes land, and when the action allows the
+    image it ends without subscribing. Every step spells out its request inline
+    so the flow can be read and executed without opening the underlying OpenAPI
+    description.
+  version: 1.0.0
+sourceDescriptions:
+- name: anchoreApi
+  url: ../openapi/anchore-enterprise-api.yaml
+  type: openapi
+workflows:
+- workflowId: subscribe-on-policy-failure
+  summary: Evaluate policy on an image and subscribe to policy_eval notifications when it fails the gate.
+  description: >-
+    Runs a policy evaluation on the supplied image digest and, when the final
+    action is stop, creates a policy_eval subscription keyed to the image tag.
+  inputs:
+    type: object
+    required:
+    - authorization
+    - imageDigest
+    - tag
+    properties:
+      authorization:
+        type: string
+        description: HTTP Basic authorization header value (e.g. "Basic dXNlcjpwYXNz").
+      imageDigest:
+        type: string
+        description: The SHA256 digest of the analyzed image to evaluate.
+      tag:
+        type: string
+        description: Image tag the evaluation and subscription are keyed to.
+      policyId:
+        type: string
+        description: Optional policy bundle id to evaluate against.
+  steps:
+  - stepId: evaluatePolicy
+    description: >-
+      Evaluate the image against the policy bundle and branch on the final gate
+      action. A "stop" action means the image failed policy.
+    operationId: checkImagePolicy
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    - name: imageDigest
+      in: path
+      value: $inputs.imageDigest
+    - name: policyId
+      in: query
+      value: $inputs.policyId
+    - name: tag
+      in: query
+      value: $inputs.tag
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      finalAction: $response.body#/0/finalAction
+      finalActionReason: $response.body#/0/finalActionReason
+    onSuccess:
+    - name: policyFailed
+      type: goto
+      stepId: createPolicySubscription
+      criteria:
+      - context: $response.body
+        condition: $[0].finalAction == "stop"
+        type: jsonpath
+    - name: policyPassed
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $[0].finalAction != "stop"
+        type: jsonpath
+  - stepId: createPolicySubscription
+    description: >-
+      Create a policy_eval subscription on the image tag so notifications are
+      sent whenever the policy evaluation result changes.
+    operationId: createSubscription
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    requestBody:
+      contentType: application/json
+      payload:
+        subscriptionType: policy_eval
+        subscriptionKey: $inputs.tag
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      subscriptionId: $response.body#/subscriptionId
+      active: $response.body#/active
+  outputs:
+    finalAction: $steps.evaluatePolicy.outputs.finalAction
+    subscriptionId: $steps.createPolicySubscription.outputs.subscriptionId

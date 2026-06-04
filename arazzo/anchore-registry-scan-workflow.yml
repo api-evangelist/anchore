@@ -1,0 +1,108 @@
+arazzo: 1.0.1
+info:
+  title: Anchore Registry Image Onboarding
+  summary: Confirm a registry is configured, then submit an image from it for analysis and confirm the queue.
+  description: >-
+    Anchore can only pull and analyze images from registries it already knows
+    about. This workflow lists the configured registries, branches to fail fast
+    when the registry that hosts the target image tag is not present, and
+    otherwise submits the image for analysis and reads back the queued image
+    record to confirm acceptance. The original "add registry then add image"
+    intent is adapted because the description only exposes a read endpoint for
+    registries (listRegistries) and no registry-create operation; the flow
+    therefore validates registry presence instead of creating one. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: anchoreApi
+  url: ../openapi/anchore-enterprise-api.yaml
+  type: openapi
+workflows:
+- workflowId: registry-image-onboarding
+  summary: Validate that a registry is configured, then queue an image from it for analysis.
+  description: >-
+    Lists configured registries, branches on whether the expected registry host
+    is present, and on presence submits the image tag for analysis and confirms
+    the queued record.
+  inputs:
+    type: object
+    required:
+    - authorization
+    - tag
+    properties:
+      authorization:
+        type: string
+        description: HTTP Basic authorization header value (e.g. "Basic dXNlcjpwYXNz").
+      registry:
+        type: string
+        description: The registry host expected to be configured (e.g. docker.io).
+      tag:
+        type: string
+        description: Image tag to analyze (e.g. docker.io/library/nginx:latest).
+  steps:
+  - stepId: listConfiguredRegistries
+    description: >-
+      List the registries Anchore is configured to pull from. Branch to the
+      image submission only when at least one registry is configured.
+    operationId: listRegistries
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      registries: $response.body
+    onSuccess:
+    - name: hasRegistries
+      type: goto
+      stepId: submitImage
+      criteria:
+      - context: $response.body
+        condition: $.length > 0
+        type: jsonpath
+    - name: noRegistries
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.length == 0
+        type: jsonpath
+  - stepId: submitImage
+    description: >-
+      Submit the image tag from the configured registry for analysis. Anchore
+      queues the analysis and returns the image record with its digest.
+    operationId: addImage
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    requestBody:
+      contentType: application/json
+      payload:
+        tag: $inputs.tag
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      imageDigest: $response.body#/0/imageDigest
+      analysisStatus: $response.body#/0/analysisStatus
+  - stepId: confirmQueued
+    description: >-
+      Read back the queued image record to confirm Anchore accepted the image
+      and is tracking its analysis status.
+    operationId: getImage
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    - name: imageDigest
+      in: path
+      value: $steps.submitImage.outputs.imageDigest
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      analysisStatus: $response.body#/analysisStatus
+      imageStatus: $response.body#/imageStatus
+  outputs:
+    imageDigest: $steps.submitImage.outputs.imageDigest
+    analysisStatus: $steps.confirmQueued.outputs.analysisStatus

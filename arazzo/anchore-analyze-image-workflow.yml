@@ -1,0 +1,152 @@
+arazzo: 1.0.1
+info:
+  title: Anchore Analyze Image End to End
+  summary: Submit a container image for analysis, poll until analyzed, then pull its vulnerabilities and policy evaluation.
+  description: >-
+    The core Anchore Enterprise scanning loop. The workflow submits an image tag
+    for analysis, polls the image record until the analysisStatus reaches a
+    terminal state, and then branches: when analysis succeeds it fetches the
+    operating-system and non-operating-system vulnerability report and evaluates
+    the image against the configured policy bundle. When analysis fails the flow
+    ends without attempting downstream reads. Every step spells out its request
+    inline so the flow can be read and executed without opening the underlying
+    OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: anchoreApi
+  url: ../openapi/anchore-enterprise-api.yaml
+  type: openapi
+workflows:
+- workflowId: analyze-image-end-to-end
+  summary: Add an image, wait for analysis, then read vulnerabilities and policy result.
+  description: >-
+    Queues an image for analysis, waits for the analysisStatus to settle, and on
+    success retrieves the vulnerability report and policy evaluation for the
+    resulting image digest.
+  inputs:
+    type: object
+    required:
+    - authorization
+    - tag
+    properties:
+      authorization:
+        type: string
+        description: HTTP Basic authorization header value (e.g. "Basic dXNlcjpwYXNz").
+      tag:
+        type: string
+        description: Image tag to analyze (e.g. docker.io/library/nginx:latest).
+      dockerfile:
+        type: string
+        description: Optional base64-encoded Dockerfile content to include in analysis.
+      vtype:
+        type: string
+        description: Vulnerability type to report (os, non-os, or all). Defaults to all.
+      policyId:
+        type: string
+        description: Optional policy bundle id to evaluate against.
+  steps:
+  - stepId: submitImage
+    description: >-
+      Submit the image tag for analysis. Anchore queues the analysis and returns
+      the image record(s) with an initial analysisStatus.
+    operationId: addImage
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    requestBody:
+      contentType: application/json
+      payload:
+        tag: $inputs.tag
+        dockerfile: $inputs.dockerfile
+    successCriteria:
+    - condition: $statusCode == 202
+    outputs:
+      imageDigest: $response.body#/0/imageDigest
+      analysisStatus: $response.body#/0/analysisStatus
+  - stepId: pollAnalysis
+    description: >-
+      Poll the image record until the analysisStatus leaves the in-progress
+      states. Branch to the vulnerability read on success or end on failure.
+    operationId: getImage
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    - name: imageDigest
+      in: path
+      value: $steps.submitImage.outputs.imageDigest
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      analysisStatus: $response.body#/analysisStatus
+    onSuccess:
+    - name: analyzed
+      type: goto
+      stepId: getVulnerabilities
+      criteria:
+      - context: $response.body
+        condition: $.analysisStatus == "analyzed"
+        type: jsonpath
+    - name: failed
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.analysisStatus == "analysis_failed"
+        type: jsonpath
+    - name: stillAnalyzing
+      type: goto
+      stepId: pollAnalysis
+      criteria:
+      - context: $response.body
+        condition: $.analysisStatus == "analyzing"
+        type: jsonpath
+  - stepId: getVulnerabilities
+    description: >-
+      Retrieve the vulnerability report for the analyzed image digest, forcing a
+      fresh evaluation against the latest feed data.
+    operationId: getImageVulnerabilities
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    - name: imageDigest
+      in: path
+      value: $steps.submitImage.outputs.imageDigest
+    - name: vtype
+      in: path
+      value: $inputs.vtype
+    - name: force_refresh
+      in: query
+      value: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      vulnerabilities: $response.body#/vulnerabilities
+  - stepId: evaluatePolicy
+    description: >-
+      Evaluate the analyzed image against the policy bundle to obtain the final
+      gate action (stop, warn, or go).
+    operationId: checkImagePolicy
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    - name: imageDigest
+      in: path
+      value: $steps.submitImage.outputs.imageDigest
+    - name: policyId
+      in: query
+      value: $inputs.policyId
+    - name: tag
+      in: query
+      value: $inputs.tag
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      finalAction: $response.body#/0/finalAction
+      evaluationId: $response.body#/0/evaluationId
+  outputs:
+    imageDigest: $steps.submitImage.outputs.imageDigest
+    vulnerabilities: $steps.getVulnerabilities.outputs.vulnerabilities
+    finalAction: $steps.evaluatePolicy.outputs.finalAction

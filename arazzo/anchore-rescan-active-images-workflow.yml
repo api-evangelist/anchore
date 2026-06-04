@@ -1,0 +1,124 @@
+arazzo: 1.0.1
+info:
+  title: Anchore Rescan Active Image and Gate
+  summary: Find an active analyzed image by tag, force a fresh vulnerability scan, and gate it against policy.
+  description: >-
+    A continuous-monitoring pattern. The workflow lists images filtered to the
+    active status and a target tag, branches to stop early when no active image
+    matches, and otherwise forces a fresh vulnerability evaluation against the
+    latest feed data and then re-runs the policy gate so drift in newly
+    disclosed vulnerabilities is caught for images already in production. Every
+    step spells out its request inline so the flow can be read and executed
+    without opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: anchoreApi
+  url: ../openapi/anchore-enterprise-api.yaml
+  type: openapi
+workflows:
+- workflowId: rescan-active-image-and-gate
+  summary: Locate an active image by tag, refresh its vulnerabilities, and re-evaluate policy.
+  description: >-
+    Lists active images for a tag, branches on whether a match exists, and for
+    the matched digest forces a vulnerability refresh and re-runs the policy
+    evaluation.
+  inputs:
+    type: object
+    required:
+    - authorization
+    - tag
+    properties:
+      authorization:
+        type: string
+        description: HTTP Basic authorization header value (e.g. "Basic dXNlcjpwYXNz").
+      tag:
+        type: string
+        description: Image tag to locate among active images (e.g. docker.io/library/nginx:latest).
+      vtype:
+        type: string
+        description: Vulnerability type to report (os, non-os, or all). Defaults to all.
+      policyId:
+        type: string
+        description: Optional policy bundle id to evaluate against.
+  steps:
+  - stepId: findActiveImage
+    description: >-
+      List active images filtered by tag and branch on whether a matching active
+      image exists.
+    operationId: listImages
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    - name: tag
+      in: query
+      value: $inputs.tag
+    - name: image_status
+      in: query
+      value: active
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      imageDigest: $response.body#/0/imageDigest
+    onSuccess:
+    - name: found
+      type: goto
+      stepId: refreshVulnerabilities
+      criteria:
+      - context: $response.body
+        condition: $.length > 0
+        type: jsonpath
+    - name: notFound
+      type: end
+      criteria:
+      - context: $response.body
+        condition: $.length == 0
+        type: jsonpath
+  - stepId: refreshVulnerabilities
+    description: >-
+      Force a fresh vulnerability evaluation of the matched image against the
+      latest feed data.
+    operationId: getImageVulnerabilities
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    - name: imageDigest
+      in: path
+      value: $steps.findActiveImage.outputs.imageDigest
+    - name: vtype
+      in: path
+      value: $inputs.vtype
+    - name: force_refresh
+      in: query
+      value: true
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      vulnerabilities: $response.body#/vulnerabilities
+  - stepId: regate
+    description: >-
+      Re-run the policy gate on the matched image to catch drift introduced by
+      newly disclosed vulnerabilities.
+    operationId: checkImagePolicy
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    - name: imageDigest
+      in: path
+      value: $steps.findActiveImage.outputs.imageDigest
+    - name: policyId
+      in: query
+      value: $inputs.policyId
+    - name: tag
+      in: query
+      value: $inputs.tag
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      finalAction: $response.body#/0/finalAction
+  outputs:
+    imageDigest: $steps.findActiveImage.outputs.imageDigest
+    vulnerabilities: $steps.refreshVulnerabilities.outputs.vulnerabilities
+    finalAction: $steps.regate.outputs.finalAction

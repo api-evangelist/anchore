@@ -1,0 +1,98 @@
+arazzo: 1.0.1
+info:
+  title: Anchore Create Policy and Evaluate Image
+  summary: Create a new security policy, then immediately evaluate an analyzed image against it to observe the gate result.
+  description: >-
+    A policy authoring and verification loop. The workflow creates a new policy
+    bundle from the supplied definition, then runs a policy evaluation on an
+    already-analyzed image using the id of the newly created policy so the
+    author can immediately see how the rules gate a real image. Every step
+    spells out its request inline so the flow can be read and executed without
+    opening the underlying OpenAPI description.
+  version: 1.0.0
+sourceDescriptions:
+- name: anchoreApi
+  url: ../openapi/anchore-enterprise-api.yaml
+  type: openapi
+workflows:
+- workflowId: create-policy-and-evaluate
+  summary: Create a policy and immediately evaluate an analyzed image against the new policy id.
+  description: >-
+    Creates a security policy from the supplied definition and evaluates the
+    given analyzed image against the returned policy id.
+  inputs:
+    type: object
+    required:
+    - authorization
+    - imageDigest
+    - name
+    - rules
+    properties:
+      authorization:
+        type: string
+        description: HTTP Basic authorization header value (e.g. "Basic dXNlcjpwYXNz").
+      imageDigest:
+        type: string
+        description: The SHA256 digest of the analyzed image to evaluate.
+      tag:
+        type: string
+        description: Optional image tag to scope the policy evaluation.
+      name:
+        type: string
+        description: Human-readable name for the new policy.
+      description:
+        type: string
+        description: Optional description of the policy intent.
+      rules:
+        type: array
+        description: The list of policy rules (gate/trigger/action) for the policy.
+        items:
+          type: object
+  steps:
+  - stepId: createPolicy
+    description: >-
+      Create a new security policy from the supplied name and rule set. Anchore
+      returns the persisted policy including its generated id.
+    operationId: createPolicy
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $inputs.name
+        description: $inputs.description
+        active: true
+        rules: $inputs.rules
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      policyId: $response.body#/id
+  - stepId: evaluateAgainstNewPolicy
+    description: >-
+      Evaluate the analyzed image against the freshly created policy id and
+      capture the resulting gate action.
+    operationId: checkImagePolicy
+    parameters:
+    - name: Authorization
+      in: header
+      value: $inputs.authorization
+    - name: imageDigest
+      in: path
+      value: $inputs.imageDigest
+    - name: policyId
+      in: query
+      value: $steps.createPolicy.outputs.policyId
+    - name: tag
+      in: query
+      value: $inputs.tag
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      finalAction: $response.body#/0/finalAction
+      finalActionReason: $response.body#/0/finalActionReason
+      evaluationId: $response.body#/0/evaluationId
+  outputs:
+    policyId: $steps.createPolicy.outputs.policyId
+    finalAction: $steps.evaluateAgainstNewPolicy.outputs.finalAction
