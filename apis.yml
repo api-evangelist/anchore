@@ -62,6 +62,8 @@ apis:
   - type: NaftikoCapability
     url: capabilities/enterprise-vulnerabilities.yaml
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/anchore/overview
 - type: ArazzoWorkflows
   url: arazzo/
   workflows:
