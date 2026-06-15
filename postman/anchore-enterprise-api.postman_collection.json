@@ -1,0 +1,1134 @@
+{
+  "info": {
+    "_postman_id": "e8beceb2-ad3d-43dd-b6f1-f75810dc139b",
+    "name": "Anchore Enterprise API",
+    "description": "REST API for Anchore Enterprise providing image analysis, vulnerability scanning, policy evaluation, SBOM generation, and subscription management for enterprise container security workflows.\n\nContact Support:\n Name: Anchore Support",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-06-05T13:12:53.000Z",
+    "updatedAt": "2026-06-05T13:12:54.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-e8beceb2-ad3d-43dd-b6f1-f75810dc139b"
+  },
+  "item": [
+    {
+      "name": "images",
+      "item": [
+        {
+          "name": "{imageDigest}",
+          "item": [
+            {
+              "name": "vuln",
+              "item": [
+                {
+                  "name": "{vtype}",
+                  "item": [
+                    {
+                      "name": "Anchore Enterprise Get Image Vulnerabilities",
+                      "id": "afeb266d-b674-4f21-8263-201d7a9f8874",
+                      "protocolProfileBehavior": {
+                        "disableBodyPruning": true
+                      },
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/images/:imageDigest/vuln/:vtype?force_refresh=<boolean>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "images",
+                            ":imageDigest",
+                            "vuln",
+                            ":vtype"
+                          ],
+                          "query": [
+                            {
+                              "key": "force_refresh",
+                              "value": "<boolean>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "id": "3f1a836e-7fe2-4432-a044-bd7e46d08e8a",
+                              "key": "imageDigest",
+                              "value": "<string>",
+                              "description": "(Required) "
+                            },
+                            {
+                              "id": "9add8e3f-97ee-48b9-803d-3ec0964e51c9",
+                              "key": "vtype",
+                              "value": "os",
+                              "description": "(Required) "
+                            }
+                          ]
+                        },
+                        "description": "Get vulnerabilities for an analyzed image"
+                      },
+                      "response": [
+                        {
+                          "id": "7e3e7502-eb7c-4547-928e-51a5e5757745",
+                          "name": "Image vulnerability report",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "application/json"
+                              },
+                              {
+                                "description": "Added as a part of security scheme: basic",
+                                "key": "Authorization",
+                                "value": "Basic <credentials>"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/images/:imageDigest/vuln/:vtype?force_refresh=<boolean>",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "images",
+                                ":imageDigest",
+                                "vuln",
+                                ":vtype"
+                              ],
+                              "query": [
+                                {
+                                  "key": "force_refresh",
+                                  "value": "<boolean>"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "imageDigest"
+                                },
+                                {
+                                  "key": "vtype"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "json",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "application/json"
+                            }
+                          ],
+                          "cookie": [],
+                          "responseTime": null,
+                          "body": "{\n  \"imageDigest\": \"<string>\",\n  \"vulnerabilityType\": \"<string>\",\n  \"vulnerabilities\": [\n    {\n      \"vuln\": \"<string>\",\n      \"severity\": \"High\",\n      \"package\": \"<string>\",\n      \"packageVersion\": \"<string>\",\n      \"packageType\": \"<string>\",\n      \"fix\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"feedGroup\": \"<string>\",\n      \"packagePath\": \"<string>\"\n    },\n    {\n      \"vuln\": \"<string>\",\n      \"severity\": \"Medium\",\n      \"package\": \"<string>\",\n      \"packageVersion\": \"<string>\",\n      \"packageType\": \"<string>\",\n      \"fix\": \"<string>\",\n      \"url\": \"<uri>\",\n      \"feedGroup\": \"<string>\",\n      \"packagePath\": \"<string>\"\n    }\n  ]\n}",
+                          "createdAt": "2026-06-05T13:12:54.000Z",
+                          "updatedAt": "2026-06-05T13:12:54.000Z",
+                          "uid": "35240-7e3e7502-eb7c-4547-928e-51a5e5757745"
+                        }
+                      ],
+                      "createdAt": "2026-06-05T13:12:54.000Z",
+                      "updatedAt": "2026-06-05T13:12:54.000Z",
+                      "uid": "35240-afeb266d-b674-4f21-8263-201d7a9f8874"
+                    }
+                  ],
+                  "id": "385fffd3-8bb0-4519-a9cd-6164daf62a37",
+                  "createdAt": "2026-06-05T13:12:54.000Z",
+                  "updatedAt": "2026-06-05T13:12:54.000Z",
+                  "uid": "35240-385fffd3-8bb0-4519-a9cd-6164daf62a37"
+                }
+              ],
+              "id": "710c2979-d871-401c-a858-df0a335fc7e7",
+              "createdAt": "2026-06-05T13:12:54.000Z",
+              "updatedAt": "2026-06-05T13:12:54.000Z",
+              "uid": "35240-710c2979-d871-401c-a858-df0a335fc7e7"
+            },
+            {
+              "name": "check",
+              "item": [
+                {
+                  "name": "Anchore Enterprise Check Image Policy",
+                  "id": "3348b769-49d7-4509-84fa-358c6bc4244c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/images/:imageDigest/check?policyId=<string>&tag=<string>",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "images",
+                        ":imageDigest",
+                        "check"
+                      ],
+                      "query": [
+                        {
+                          "key": "policyId",
+                          "value": "<string>"
+                        },
+                        {
+                          "key": "tag",
+                          "value": "<string>"
+                        }
+                      ],
+                      "variable": [
+                        {
+                          "id": "ffcf0d01-21e9-45af-aeed-f1076d200041",
+                          "key": "imageDigest",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Evaluate policy compliance for an analyzed image"
+                  },
+                  "response": [
+                    {
+                      "id": "61a34ea2-f9ce-431b-ab9a-f5e1f3941ea5",
+                      "name": "Policy evaluation result",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/images/:imageDigest/check?policyId=<string>&tag=<string>",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "images",
+                            ":imageDigest",
+                            "check"
+                          ],
+                          "query": [
+                            {
+                              "key": "policyId",
+                              "value": "<string>"
+                            },
+                            {
+                              "key": "tag",
+                              "value": "<string>"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "imageDigest"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "[\n  {\n    \"imageDigest\": \"<string>\",\n    \"evaluationId\": \"<string>\",\n    \"policyId\": \"<string>\",\n    \"finalAction\": \"warn\",\n    \"finalActionReason\": \"<string>\",\n    \"createdAt\": \"<dateTime>\"\n  },\n  {\n    \"imageDigest\": \"<string>\",\n    \"evaluationId\": \"<string>\",\n    \"policyId\": \"<string>\",\n    \"finalAction\": \"go\",\n    \"finalActionReason\": \"<string>\",\n    \"createdAt\": \"<dateTime>\"\n  }\n]",
+                      "createdAt": "2026-06-05T13:12:54.000Z",
+                      "updatedAt": "2026-06-05T13:12:54.000Z",
+                      "uid": "35240-61a34ea2-f9ce-431b-ab9a-f5e1f3941ea5"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T13:12:54.000Z",
+                  "updatedAt": "2026-06-05T13:12:54.000Z",
+                  "uid": "35240-3348b769-49d7-4509-84fa-358c6bc4244c"
+                }
+              ],
+              "id": "4ccb3096-355d-4401-98fb-bec3fe7a956e",
+              "createdAt": "2026-06-05T13:12:54.000Z",
+              "updatedAt": "2026-06-05T13:12:54.000Z",
+              "uid": "35240-4ccb3096-355d-4401-98fb-bec3fe7a956e"
+            },
+            {
+              "name": "sbom",
+              "item": [
+                {
+                  "name": "Anchore Enterprise Get Image SBOM",
+                  "id": "60381530-2c2f-4411-a818-614c0d55c21b",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/images/:imageDigest/sbom",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "images",
+                        ":imageDigest",
+                        "sbom"
+                      ],
+                      "variable": [
+                        {
+                          "id": "98e9be6c-203c-4882-9441-25e2973e64ff",
+                          "key": "imageDigest",
+                          "value": "<string>",
+                          "description": "(Required) "
+                        }
+                      ]
+                    },
+                    "description": "Retrieve the Software Bill of Materials for an analyzed image"
+                  },
+                  "response": [
+                    {
+                      "id": "2f606921-3ea2-4f91-a63b-8b4e5d4868df",
+                      "name": "Image SBOM in CycloneDX format",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          },
+                          {
+                            "description": "Added as a part of security scheme: basic",
+                            "key": "Authorization",
+                            "value": "Basic <credentials>"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/images/:imageDigest/sbom",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "images",
+                            ":imageDigest",
+                            "sbom"
+                          ],
+                          "variable": [
+                            {
+                              "key": "imageDigest"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "json",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "cookie": [],
+                      "responseTime": null,
+                      "body": "{\n  \"bomFormat\": \"<string>\",\n  \"specVersion\": \"<string>\",\n  \"serialNumber\": \"<string>\",\n  \"version\": \"<integer>\",\n  \"metadata\": {},\n  \"components\": [\n    {\n      \"type\": \"container\",\n      \"name\": \"<string>\",\n      \"version\": \"<string>\",\n      \"purl\": \"<string>\",\n      \"licenses\": [\n        {\n          \"license\": {\n            \"id\": \"<string>\"\n          }\n        },\n        {\n          \"license\": {\n            \"id\": \"<string>\"\n          }\n        }\n      ],\n      \"hashes\": [\n        {\n          \"alg\": \"<string>\",\n          \"content\": \"<string>\"\n        },\n        {\n          \"alg\": \"<string>\",\n          \"content\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"type\": \"firmware\",\n      \"name\": \"<string>\",\n      \"version\": \"<string>\",\n      \"purl\": \"<string>\",\n      \"licenses\": [\n        {\n          \"license\": {\n            \"id\": \"<string>\"\n          }\n        },\n        {\n          \"license\": {\n            \"id\": \"<string>\"\n          }\n        }\n      ],\n      \"hashes\": [\n        {\n          \"alg\": \"<string>\",\n          \"content\": \"<string>\"\n        },\n        {\n          \"alg\": \"<string>\",\n          \"content\": \"<string>\"\n        }\n      ]\n    }\n  ]\n}",
+                      "createdAt": "2026-06-05T13:12:54.000Z",
+                      "updatedAt": "2026-06-05T13:12:54.000Z",
+                      "uid": "35240-2f606921-3ea2-4f91-a63b-8b4e5d4868df"
+                    }
+                  ],
+                  "createdAt": "2026-06-05T13:12:54.000Z",
+                  "updatedAt": "2026-06-05T13:12:54.000Z",
+                  "uid": "35240-60381530-2c2f-4411-a818-614c0d55c21b"
+                }
+              ],
+              "id": "0b91b5f5-c02f-4d43-9669-5546b48efd63",
+              "createdAt": "2026-06-05T13:12:54.000Z",
+              "updatedAt": "2026-06-05T13:12:54.000Z",
+              "uid": "35240-0b91b5f5-c02f-4d43-9669-5546b48efd63"
+            },
+            {
+              "name": "Anchore Enterprise Get Image",
+              "id": "86dd6abd-1f96-4fc6-b86a-5526814512fa",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/images/:imageDigest",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "images",
+                    ":imageDigest"
+                  ],
+                  "variable": [
+                    {
+                      "id": "e0e3bb6a-e4c9-41cc-be03-987a5268c4f0",
+                      "key": "imageDigest",
+                      "value": "<string>",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "description": "Get details for a specific analyzed image"
+              },
+              "response": [
+                {
+                  "id": "e5e59cc1-e132-4b7c-b0bc-af887f93a646",
+                  "name": "Image details",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      },
+                      {
+                        "description": "Added as a part of security scheme: basic",
+                        "key": "Authorization",
+                        "value": "Basic <credentials>"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/images/:imageDigest",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "images",
+                        ":imageDigest"
+                      ],
+                      "variable": [
+                        {
+                          "key": "imageDigest"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "json",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "cookie": [],
+                  "responseTime": null,
+                  "body": "{\n  \"imageDigest\": \"<string>\",\n  \"analysisStatus\": \"analysis_failed\",\n  \"imageStatus\": \"active\",\n  \"createdAt\": \"<dateTime>\",\n  \"updatedAt\": \"<dateTime>\",\n  \"imageContent\": {\n    \"metadata\": {\n      \"arch\": \"<string>\",\n      \"distro\": \"<string>\",\n      \"distroVersion\": \"<string>\",\n      \"dockerfile\": \"<string>\",\n      \"imageSize\": \"<integer>\",\n      \"layerCount\": \"<integer>\"\n    }\n  }\n}",
+                  "createdAt": "2026-06-05T13:12:54.000Z",
+                  "updatedAt": "2026-06-05T13:12:54.000Z",
+                  "uid": "35240-e5e59cc1-e132-4b7c-b0bc-af887f93a646"
+                }
+              ],
+              "createdAt": "2026-06-05T13:12:54.000Z",
+              "updatedAt": "2026-06-05T13:12:54.000Z",
+              "uid": "35240-86dd6abd-1f96-4fc6-b86a-5526814512fa"
+            }
+          ],
+          "id": "37159cec-d7dc-40a0-825a-a57fa46750b4",
+          "createdAt": "2026-06-05T13:12:54.000Z",
+          "updatedAt": "2026-06-05T13:12:54.000Z",
+          "uid": "35240-37159cec-d7dc-40a0-825a-a57fa46750b4"
+        },
+        {
+          "name": "Anchore Enterprise List Images",
+          "id": "907ed3bb-58d6-420b-bf6d-e43cd42bece5",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/images?tag=<string>&image_status=deleting",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "images"
+              ],
+              "query": [
+                {
+                  "description": "Filter by image tag",
+                  "key": "tag",
+                  "value": "<string>"
+                },
+                {
+                  "key": "image_status",
+                  "value": "deleting"
+                }
+              ]
+            },
+            "description": "List all images analyzed by Anchore Enterprise"
+          },
+          "response": [
+            {
+              "id": "0f686690-5674-493c-b874-221e78770d3e",
+              "name": "List of analyzed images",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/images?tag=<string>&image_status=deleting",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "images"
+                  ],
+                  "query": [
+                    {
+                      "description": "Filter by image tag",
+                      "key": "tag",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "image_status",
+                      "value": "deleting"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"imageDigest\": \"<string>\",\n    \"analysisStatus\": \"analyzed\",\n    \"imageStatus\": \"inactive\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"imageContent\": {\n      \"metadata\": {\n        \"arch\": \"<string>\",\n        \"distro\": \"<string>\",\n        \"distroVersion\": \"<string>\",\n        \"dockerfile\": \"<string>\",\n        \"imageSize\": \"<integer>\",\n        \"layerCount\": \"<integer>\"\n      }\n    }\n  },\n  {\n    \"imageDigest\": \"<string>\",\n    \"analysisStatus\": \"not_analyzed\",\n    \"imageStatus\": \"deleting\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"imageContent\": {\n      \"metadata\": {\n        \"arch\": \"<string>\",\n        \"distro\": \"<string>\",\n        \"distroVersion\": \"<string>\",\n        \"dockerfile\": \"<string>\",\n        \"imageSize\": \"<integer>\",\n        \"layerCount\": \"<integer>\"\n      }\n    }\n  }\n]",
+              "createdAt": "2026-06-05T13:12:54.000Z",
+              "updatedAt": "2026-06-05T13:12:54.000Z",
+              "uid": "35240-0f686690-5674-493c-b874-221e78770d3e"
+            }
+          ],
+          "createdAt": "2026-06-05T13:12:54.000Z",
+          "updatedAt": "2026-06-05T13:12:54.000Z",
+          "uid": "35240-907ed3bb-58d6-420b-bf6d-e43cd42bece5"
+        },
+        {
+          "name": "Anchore Enterprise Add Image",
+          "id": "b06f487d-aa57-4d25-b139-4d89a1cd31dc",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tag\": \"<string>\",\n  \"digest\": \"<string>\",\n  \"dockerfile\": \"<string>\",\n  \"annotations\": {\n    \"non9\": \"<string>\",\n    \"fugiatbb\": \"<string>\",\n    \"culpa_f\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/images",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "images"
+              ]
+            },
+            "description": "Submit an image for analysis"
+          },
+          "response": [
+            {
+              "id": "2b741951-98b9-4e31-bf8c-af61fe680fa8",
+              "name": "Image analysis queued",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tag\": \"<string>\",\n  \"digest\": \"<string>\",\n  \"dockerfile\": \"<string>\",\n  \"annotations\": {\n    \"non9\": \"<string>\",\n    \"fugiatbb\": \"<string>\",\n    \"culpa_f\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/images",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "images"
+                  ]
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"imageDigest\": \"<string>\",\n    \"analysisStatus\": \"analyzed\",\n    \"imageStatus\": \"inactive\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"imageContent\": {\n      \"metadata\": {\n        \"arch\": \"<string>\",\n        \"distro\": \"<string>\",\n        \"distroVersion\": \"<string>\",\n        \"dockerfile\": \"<string>\",\n        \"imageSize\": \"<integer>\",\n        \"layerCount\": \"<integer>\"\n      }\n    }\n  },\n  {\n    \"imageDigest\": \"<string>\",\n    \"analysisStatus\": \"not_analyzed\",\n    \"imageStatus\": \"deleting\",\n    \"createdAt\": \"<dateTime>\",\n    \"updatedAt\": \"<dateTime>\",\n    \"imageContent\": {\n      \"metadata\": {\n        \"arch\": \"<string>\",\n        \"distro\": \"<string>\",\n        \"distroVersion\": \"<string>\",\n        \"dockerfile\": \"<string>\",\n        \"imageSize\": \"<integer>\",\n        \"layerCount\": \"<integer>\"\n      }\n    }\n  }\n]",
+              "createdAt": "2026-06-05T13:12:54.000Z",
+              "updatedAt": "2026-06-05T13:12:54.000Z",
+              "uid": "35240-2b741951-98b9-4e31-bf8c-af61fe680fa8"
+            }
+          ],
+          "createdAt": "2026-06-05T13:12:54.000Z",
+          "updatedAt": "2026-06-05T13:12:54.000Z",
+          "uid": "35240-b06f487d-aa57-4d25-b139-4d89a1cd31dc"
+        }
+      ],
+      "id": "ea50be4c-b2c3-45a5-b4ad-39910af390e4",
+      "createdAt": "2026-06-05T13:12:54.000Z",
+      "updatedAt": "2026-06-05T13:12:54.000Z",
+      "uid": "35240-ea50be4c-b2c3-45a5-b4ad-39910af390e4"
+    },
+    {
+      "name": "policies",
+      "item": [
+        {
+          "name": "Anchore Enterprise List Policies",
+          "id": "d14eac27-7db3-4765-a117-ce793f59a9a8",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/policies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "policies"
+              ]
+            },
+            "description": "List all security policies configured in Anchore Enterprise"
+          },
+          "response": [
+            {
+              "id": "460935f6-bda4-4c58-b81e-fd1e0c8cf1a6",
+              "name": "List of policies",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/policies",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policies"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"active\": \"<boolean>\",\n    \"rules\": [\n      {\n        \"id\": \"<string>\",\n        \"gate\": \"<string>\",\n        \"trigger\": \"<string>\",\n        \"action\": \"stop\",\n        \"parameters\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<string>\",\n        \"gate\": \"<string>\",\n        \"trigger\": \"<string>\",\n        \"action\": \"go\",\n        \"parameters\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ]\n      }\n    ],\n    \"createdAt\": \"<dateTime>\"\n  },\n  {\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"active\": \"<boolean>\",\n    \"rules\": [\n      {\n        \"id\": \"<string>\",\n        \"gate\": \"<string>\",\n        \"trigger\": \"<string>\",\n        \"action\": \"go\",\n        \"parameters\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ]\n      },\n      {\n        \"id\": \"<string>\",\n        \"gate\": \"<string>\",\n        \"trigger\": \"<string>\",\n        \"action\": \"warn\",\n        \"parameters\": [\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          },\n          {\n            \"name\": \"<string>\",\n            \"value\": \"<string>\"\n          }\n        ]\n      }\n    ],\n    \"createdAt\": \"<dateTime>\"\n  }\n]",
+              "createdAt": "2026-06-05T13:12:54.000Z",
+              "updatedAt": "2026-06-05T13:12:54.000Z",
+              "uid": "35240-460935f6-bda4-4c58-b81e-fd1e0c8cf1a6"
+            }
+          ],
+          "createdAt": "2026-06-05T13:12:54.000Z",
+          "updatedAt": "2026-06-05T13:12:54.000Z",
+          "uid": "35240-d14eac27-7db3-4765-a117-ce793f59a9a8"
+        },
+        {
+          "name": "Anchore Enterprise Create Policy",
+          "id": "d690072b-c244-44c0-928e-e1a182a79d8a",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"rules\": [\n    {\n      \"id\": \"<string>\",\n      \"gate\": \"<string>\",\n      \"trigger\": \"<string>\",\n      \"action\": \"stop\",\n      \"parameters\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"gate\": \"<string>\",\n      \"trigger\": \"<string>\",\n      \"action\": \"go\",\n      \"parameters\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"createdAt\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/policies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "policies"
+              ]
+            },
+            "description": "Create a new security policy"
+          },
+          "response": [
+            {
+              "id": "ceffe31b-9cc5-4fbd-b31f-93fa2c220a9a",
+              "name": "Created policy",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"rules\": [\n    {\n      \"id\": \"<string>\",\n      \"gate\": \"<string>\",\n      \"trigger\": \"<string>\",\n      \"action\": \"stop\",\n      \"parameters\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"gate\": \"<string>\",\n      \"trigger\": \"<string>\",\n      \"action\": \"go\",\n      \"parameters\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"createdAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/policies",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "policies"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"rules\": [\n    {\n      \"id\": \"<string>\",\n      \"gate\": \"<string>\",\n      \"trigger\": \"<string>\",\n      \"action\": \"stop\",\n      \"parameters\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"gate\": \"<string>\",\n      \"trigger\": \"<string>\",\n      \"action\": \"go\",\n      \"parameters\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"createdAt\": \"<dateTime>\"\n}",
+              "createdAt": "2026-06-05T13:12:54.000Z",
+              "updatedAt": "2026-06-05T13:12:54.000Z",
+              "uid": "35240-ceffe31b-9cc5-4fbd-b31f-93fa2c220a9a"
+            }
+          ],
+          "createdAt": "2026-06-05T13:12:54.000Z",
+          "updatedAt": "2026-06-05T13:12:54.000Z",
+          "uid": "35240-d690072b-c244-44c0-928e-e1a182a79d8a"
+        }
+      ],
+      "id": "1764cc61-4713-4062-b8f6-f70cad8d2caa",
+      "createdAt": "2026-06-05T13:12:54.000Z",
+      "updatedAt": "2026-06-05T13:12:54.000Z",
+      "uid": "35240-1764cc61-4713-4062-b8f6-f70cad8d2caa"
+    },
+    {
+      "name": "subscriptions",
+      "item": [
+        {
+          "name": "Anchore Enterprise List Subscriptions",
+          "id": "fa369979-8bb4-40bf-9dba-e87835af7c45",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subscriptions"
+              ]
+            },
+            "description": "List all active subscriptions for image event notifications"
+          },
+          "response": [
+            {
+              "id": "7f2819c1-fea6-497b-8cc4-7c8fa5b1636b",
+              "name": "List of subscriptions",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"subscriptionId\": \"<string>\",\n    \"subscriptionType\": \"tag_update\",\n    \"subscriptionKey\": \"<string>\",\n    \"active\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\"\n  },\n  {\n    \"subscriptionId\": \"<string>\",\n    \"subscriptionType\": \"analysis_update\",\n    \"subscriptionKey\": \"<string>\",\n    \"active\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\"\n  }\n]",
+              "createdAt": "2026-06-05T13:12:54.000Z",
+              "updatedAt": "2026-06-05T13:12:54.000Z",
+              "uid": "35240-7f2819c1-fea6-497b-8cc4-7c8fa5b1636b"
+            }
+          ],
+          "createdAt": "2026-06-05T13:12:54.000Z",
+          "updatedAt": "2026-06-05T13:12:54.000Z",
+          "uid": "35240-fa369979-8bb4-40bf-9dba-e87835af7c45"
+        },
+        {
+          "name": "Anchore Enterprise Create Subscription",
+          "id": "41f4c887-79d2-4adf-ae3a-868f496908d2",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"subscriptionType\": \"vuln_update\",\n  \"subscriptionKey\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "headerFamily": "json",
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "subscriptions"
+              ]
+            },
+            "description": "Subscribe to events for an image tag"
+          },
+          "response": [
+            {
+              "id": "c2f5eb31-64fd-47ba-9de1-5ee7155e2392",
+              "name": "Created subscription",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"subscriptionType\": \"vuln_update\",\n  \"subscriptionKey\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/subscriptions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "subscriptions"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "{\n  \"subscriptionId\": \"<string>\",\n  \"subscriptionType\": \"tag_update\",\n  \"subscriptionKey\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"createdAt\": \"<dateTime>\"\n}",
+              "createdAt": "2026-06-05T13:12:54.000Z",
+              "updatedAt": "2026-06-05T13:12:54.000Z",
+              "uid": "35240-c2f5eb31-64fd-47ba-9de1-5ee7155e2392"
+            }
+          ],
+          "createdAt": "2026-06-05T13:12:54.000Z",
+          "updatedAt": "2026-06-05T13:12:54.000Z",
+          "uid": "35240-41f4c887-79d2-4adf-ae3a-868f496908d2"
+        }
+      ],
+      "id": "6d6f4ba4-1eca-4046-a042-4c249fbd40fc",
+      "createdAt": "2026-06-05T13:12:54.000Z",
+      "updatedAt": "2026-06-05T13:12:54.000Z",
+      "uid": "35240-6d6f4ba4-1eca-4046-a042-4c249fbd40fc"
+    },
+    {
+      "name": "registries",
+      "item": [
+        {
+          "name": "Anchore Enterprise List Registries",
+          "id": "3866328a-99ea-4552-b352-2821319cbbb9",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/registries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "registries"
+              ]
+            },
+            "description": "List all configured container registries"
+          },
+          "response": [
+            {
+              "id": "6530193d-85ba-4d29-ac51-662494c4b44e",
+              "name": "List of registries",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  },
+                  {
+                    "description": "Added as a part of security scheme: basic",
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/registries",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "registries"
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "_postman_previewlanguage": "json",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "cookie": [],
+              "responseTime": null,
+              "body": "[\n  {\n    \"registry\": \"<string>\",\n    \"registryType\": \"awsecr\",\n    \"registryUser\": \"<string>\",\n    \"registryVerifySsl\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\"\n  },\n  {\n    \"registry\": \"<string>\",\n    \"registryType\": \"docker_v2\",\n    \"registryUser\": \"<string>\",\n    \"registryVerifySsl\": \"<boolean>\",\n    \"createdAt\": \"<dateTime>\"\n  }\n]",
+              "createdAt": "2026-06-05T13:12:54.000Z",
+              "updatedAt": "2026-06-05T13:12:54.000Z",
+              "uid": "35240-6530193d-85ba-4d29-ac51-662494c4b44e"
+            }
+          ],
+          "createdAt": "2026-06-05T13:12:54.000Z",
+          "updatedAt": "2026-06-05T13:12:54.000Z",
+          "uid": "35240-3866328a-99ea-4552-b352-2821319cbbb9"
+        }
+      ],
+      "id": "562f2355-26c0-4f80-95c5-bef49ec5fe07",
+      "createdAt": "2026-06-05T13:12:54.000Z",
+      "updatedAt": "2026-06-05T13:12:54.000Z",
+      "uid": "35240-562f2355-26c0-4f80-95c5-bef49ec5fe07"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}",
+        "type": "string"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://anchore.example.com/v2"
+    }
+  ]
+}
