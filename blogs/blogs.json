@@ -2,11 +2,11 @@
   "repo": "anchore",
   "feeds": [
     {
-      "source": "https://anchore.com/blog/",
+      "source": "https://anchore.com/feed/",
       "feed_url": "https://anchore.com/feed/",
       "title": "",
       "saved": 0,
-      "method": "discovered"
+      "method": "feed"
     },
     {
       "source": "https://github.com/anchore",
@@ -17,5 +17,5 @@
     }
   ],
   "post_count": 11,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:03:07Z"
 }

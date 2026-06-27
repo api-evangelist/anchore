@@ -49,116 +49,113 @@ apis:
     url: json-ld/anchore-enterprise-api-context.jsonld
   - type: Vocabulary
     url: vocabulary/anchore-vocabulary.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/enterprise-images.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/enterprise-policies.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/enterprise-registries.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/enterprise-sbom.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/enterprise-subscriptions.yaml
-  - type: NaftikoCapability
+  - type: X-NaftikoCapability
     url: capabilities/enterprise-vulnerabilities.yaml
 common:
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/anchore/overview
-- type: ArazzoWorkflows
-  url: arazzo/
-  workflows:
-  - url: arazzo/anchore-analyze-image-workflow.yml
+  - type: Arazzo
+    url: arazzo/anchore-analyze-image-workflow.yml
     name: Anchore Analyze Image End to End
-    summary: Submit a container image for analysis, poll until analyzed, then pull its vulnerabilities and policy evaluation.
-  - url: arazzo/anchore-create-policy-and-evaluate-workflow.yml
+  - type: Arazzo
+    url: arazzo/anchore-create-policy-and-evaluate-workflow.yml
     name: Anchore Create Policy and Evaluate Image
-    summary: Create a new security policy, then immediately evaluate an analyzed image against it to observe the gate result.
-  - url: arazzo/anchore-image-sbom-and-vulns-workflow.yml
+  - type: Arazzo
+    url: arazzo/anchore-image-sbom-and-vulns-workflow.yml
     name: Anchore Image SBOM and Vulnerability Pull
-    summary: Confirm an image is analyzed, then export its CycloneDX SBOM and its vulnerability report for downstream compliance use.
-  - url: arazzo/anchore-registry-scan-workflow.yml
+  - type: Arazzo
+    url: arazzo/anchore-registry-scan-workflow.yml
     name: Anchore Registry Image Onboarding
-    summary: Confirm a registry is configured, then submit an image from it for analysis and confirm the queue.
-  - url: arazzo/anchore-rescan-active-images-workflow.yml
+  - type: Arazzo
+    url: arazzo/anchore-rescan-active-images-workflow.yml
     name: Anchore Rescan Active Image and Gate
-    summary: Find an active analyzed image by tag, force a fresh vulnerability scan, and gate it against policy.
-  - url: arazzo/anchore-subscribe-on-policy-fail-workflow.yml
+  - type: Arazzo
+    url: arazzo/anchore-subscribe-on-policy-fail-workflow.yml
     name: Anchore Subscribe on Policy Failure
-    summary: Evaluate an analyzed image against policy and, when it fails the gate, subscribe to ongoing policy-evaluation notifications for its tag.
-- type: LinkedIn
-  url: https://www.linkedin.com/company/anchore
-- type: Portal
-  url: https://anchore.com/
-- type: Documentation
-  url: https://docs.anchore.com/
-- type: GettingStarted
-  url: https://docs.anchore.com/current/docs/quickstart/
-- type: Authentication
-  url: https://docs.anchore.com/current/docs/using/api_usage/
-- type: GitHubOrganization
-  url: https://github.com/anchore
-- type: Blog
-  url: https://anchore.com/blog/
-- type: Support
-  url: https://anchore.com/support/
-- type: Pricing
-  url: https://anchore.com/pricing/
-- type: StatusPage
-  url: https://status.anchore.com/
-- type: TermsOfService
-  url: https://anchore.com/terms-of-service/
-- type: PrivacyPolicy
-  url: https://anchore.com/privacy-policy/
-- type: JSONSchema
-  url: json-schema/anchore-image-schema.json
-- type: JSONSchema
-  url: json-schema/anchore-vulnerability-schema.json
-- type: JSONSchema
-  url: json-schema/anchore-sbom-schema.json
-- type: SpectralRules
-  url: rules/anchore-spectral-rules.yml
-- type: Vocabulary
-  url: vocabulary/anchore-vocabulary.yaml
-- type: JSONLD
-  url: json-ld/anchore-enterprise-api-context.jsonld
-- type: Features
-  data:
-  - Container image vulnerability scanning (OS and language packages)
-  - SBOM generation in CycloneDX and SPDX formats (Syft)
-  - Policy-based compliance enforcement
-  - Kubernetes admission controller integration
-  - CI/CD pipeline integration (GitHub Actions, Jenkins, GitLab)
-  - Registry connectors (Docker Hub, ECR, GCR, ACR, Harbor)
-  - License scanning and compliance (Grant)
-  - Grype vulnerability database with NVD, GitHub Advisory, and custom feeds
-  - Anchore Enterprise reporting and audit logging
-  - REST API for image analysis, subscriptions, and notifications
-- type: UseCases
-  data:
-  - Shift-left container security scanning in CI/CD pipelines
-  - Generate SBOMs for software supply chain transparency
-  - Enforce image policies at Kubernetes admission control
-  - Track vulnerabilities across container registries and deployed images
-  - License compliance scanning for open source components
-  - Continuous compliance monitoring for regulated industries
-  - Developer self-service security scanning via CLI tools
-- type: Integrations
-  data:
-  - GitHub Actions (syft-action, scan-action)
-  - Kubernetes (anchore-charts, admission controller)
-  - Docker and OCI registries
-  - Jenkins pipeline integration
-  - Harbor registry integration
-  - Amazon ECR, Google GCR, Azure ACR
-  - Grype vulnerability database
-  - CycloneDX and SPDX SBOM standards
-- type: Integrations
-  url: https://anchore.com/integrations/
-- name: MCP Server
-  url: https://github.com/anchore/grype-mcp
-  type: MCPServer
-- type: LLMsTxt
-  url: https://docs.anchore.com/llms.txt
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/anchore
+  - type: Portal
+    url: https://anchore.com/
+  - type: Documentation
+    url: https://docs.anchore.com/
+  - type: GettingStarted
+    url: https://docs.anchore.com/current/docs/quickstart/
+  - type: Authentication
+    url: https://docs.anchore.com/current/docs/using/api_usage/
+  - type: GitHubOrganization
+    url: https://github.com/anchore
+  - type: Blog
+    url: https://anchore.com/blog/
+  - type: Support
+    url: https://anchore.com/support/
+  - type: Pricing
+    url: https://anchore.com/pricing/
+  - type: StatusPage
+    url: https://status.anchore.com/
+  - type: TermsOfService
+    url: https://anchore.com/terms-of-service/
+  - type: PrivacyPolicy
+    url: https://anchore.com/privacy-policy/
+  - type: JSONSchema
+    url: json-schema/anchore-image-schema.json
+  - type: JSONSchema
+    url: json-schema/anchore-vulnerability-schema.json
+  - type: JSONSchema
+    url: json-schema/anchore-sbom-schema.json
+  - type: SpectralRules
+    url: rules/anchore-spectral-rules.yml
+  - type: Vocabulary
+    url: vocabulary/anchore-vocabulary.yaml
+  - type: JSONLD
+    url: json-ld/anchore-enterprise-api-context.jsonld
+  - type: Features
+    data:
+    - Container image vulnerability scanning (OS and language packages)
+    - SBOM generation in CycloneDX and SPDX formats (Syft)
+    - Policy-based compliance enforcement
+    - Kubernetes admission controller integration
+    - CI/CD pipeline integration (GitHub Actions, Jenkins, GitLab)
+    - Registry connectors (Docker Hub, ECR, GCR, ACR, Harbor)
+    - License scanning and compliance (Grant)
+    - Grype vulnerability database with NVD, GitHub Advisory, and custom feeds
+    - Anchore Enterprise reporting and audit logging
+    - REST API for image analysis, subscriptions, and notifications
+  - type: UseCases
+    data:
+    - Shift-left container security scanning in CI/CD pipelines
+    - Generate SBOMs for software supply chain transparency
+    - Enforce image policies at Kubernetes admission control
+    - Track vulnerabilities across container registries and deployed images
+    - License compliance scanning for open source components
+    - Continuous compliance monitoring for regulated industries
+    - Developer self-service security scanning via CLI tools
+  - type: Integrations
+    data:
+    - GitHub Actions (syft-action, scan-action)
+    - Kubernetes (anchore-charts, admission controller)
+    - Docker and OCI registries
+    - Jenkins pipeline integration
+    - Harbor registry integration
+    - Amazon ECR, Google GCR, Azure ACR
+    - Grype vulnerability database
+    - CycloneDX and SPDX SBOM standards
+  - type: Integrations
+    url: https://anchore.com/integrations/
+  - name: MCP Server
+    url: https://github.com/anchore/grype-mcp
+    type: MCPServer
+  - type: LlmsText
+    url: https://docs.anchore.com/llms.txt
 integrations:
 - name: Anchore
 - name: Icon
