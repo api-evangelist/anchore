@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/anchore-enterprise-api.yaml
+summary:
+  types:
+  - http
+schemes:
+- name: basicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/anchore-enterprise-api.yaml
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/anchore-enterprise-api.yaml

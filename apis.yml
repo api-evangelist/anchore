@@ -62,6 +62,10 @@ apis:
   - type: X-NaftikoCapability
     url: capabilities/enterprise-vulnerabilities.yaml
 common:
+  - type: DomainSecurity
+    url: security/anchore-domain-security.yml
+  - type: Authentication
+    url: authentication/anchore-authentication.yml
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/anchore/overview
   - type: Arazzo
