@@ -62,6 +62,8 @@ apis:
   - type: X-NaftikoCapability
     url: capabilities/enterprise-vulnerabilities.yaml
 common:
+  - type: AgenticAccess
+    url: agentic-access/anchore-agentic-access.yml
   - type: DomainSecurity
     url: security/anchore-domain-security.yml
   - type: Authentication
