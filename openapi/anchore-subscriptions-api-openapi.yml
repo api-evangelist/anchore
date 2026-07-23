@@ -1,0 +1,99 @@
+openapi: 3.1.0
+info:
+  title: Anchore Enterprise Images Subscriptions API
+  description: REST API for Anchore Enterprise providing image analysis, vulnerability scanning, policy evaluation, SBOM generation, and subscription management for enterprise container security workflows.
+  version: '2.0'
+  contact:
+    name: Anchore Support
+    url: https://anchore.com/support/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://anchore.example.com/v2
+  description: Anchore Enterprise API
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Subscriptions
+paths:
+  /subscriptions:
+    get:
+      operationId: listSubscriptions
+      summary: Anchore Enterprise List Subscriptions
+      description: List all active subscriptions for image event notifications
+      tags:
+      - Subscriptions
+      responses:
+        '200':
+          description: List of subscriptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+    post:
+      operationId: createSubscription
+      summary: Anchore Enterprise Create Subscription
+      description: Subscribe to events for an image tag
+      tags:
+      - Subscriptions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+      responses:
+        '200':
+          description: Created subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+components:
+  schemas:
+    SubscriptionRequest:
+      type: object
+      required:
+      - subscriptionType
+      - subscriptionKey
+      properties:
+        subscriptionType:
+          type: string
+          enum:
+          - tag_update
+          - policy_eval
+          - vuln_update
+          - analysis_update
+        subscriptionKey:
+          type: string
+          description: Image tag to subscribe to
+    Subscription:
+      type: object
+      properties:
+        subscriptionId:
+          type: string
+        subscriptionType:
+          type: string
+          enum:
+          - tag_update
+          - policy_eval
+          - vuln_update
+          - analysis_update
+        subscriptionKey:
+          type: string
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: http
+      scheme: bearer

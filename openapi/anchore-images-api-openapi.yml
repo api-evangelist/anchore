@@ -1,0 +1,163 @@
+openapi: 3.1.0
+info:
+  title: Anchore Enterprise Images API
+  description: REST API for Anchore Enterprise providing image analysis, vulnerability scanning, policy evaluation, SBOM generation, and subscription management for enterprise container security workflows.
+  version: '2.0'
+  contact:
+    name: Anchore Support
+    url: https://anchore.com/support/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://anchore.example.com/v2
+  description: Anchore Enterprise API
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Images
+paths:
+  /images:
+    get:
+      operationId: listImages
+      summary: Anchore Enterprise List Images
+      description: List all images analyzed by Anchore Enterprise
+      tags:
+      - Images
+      parameters:
+      - name: tag
+        in: query
+        schema:
+          type: string
+        description: Filter by image tag
+      - name: image_status
+        in: query
+        schema:
+          type: string
+          enum:
+          - active
+          - inactive
+          - deleting
+      responses:
+        '200':
+          description: List of analyzed images
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnchoreImage'
+    post:
+      operationId: addImage
+      summary: Anchore Enterprise Add Image
+      description: Submit an image for analysis
+      tags:
+      - Images
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageAnalysisRequest'
+      responses:
+        '202':
+          description: Image analysis queued
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnchoreImage'
+  /images/{imageDigest}:
+    get:
+      operationId: getImage
+      summary: Anchore Enterprise Get Image
+      description: Get details for a specific analyzed image
+      tags:
+      - Images
+      parameters:
+      - name: imageDigest
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Image details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnchoreImage'
+components:
+  schemas:
+    ImageContent:
+      type: object
+      properties:
+        metadata:
+          type: object
+          properties:
+            arch:
+              type: string
+            distro:
+              type: string
+            distroVersion:
+              type: string
+            dockerfile:
+              type: string
+            imageSize:
+              type: integer
+            layerCount:
+              type: integer
+    AnchoreImage:
+      type: object
+      properties:
+        imageDigest:
+          type: string
+          description: Unique SHA256 digest of the image
+        analysisStatus:
+          type: string
+          enum:
+          - not_analyzed
+          - analyzing
+          - analyzed
+          - analysis_failed
+        imageStatus:
+          type: string
+          enum:
+          - active
+          - inactive
+          - deleting
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        imageContent:
+          $ref: '#/components/schemas/ImageContent'
+    ImageAnalysisRequest:
+      type: object
+      required:
+      - tag
+      properties:
+        tag:
+          type: string
+          description: Image tag to analyze (e.g. docker.io/library/nginx:latest)
+        digest:
+          type: string
+          description: Optional image digest for pinned analysis
+        dockerfile:
+          type: string
+          description: Base64-encoded Dockerfile content
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: http
+      scheme: bearer

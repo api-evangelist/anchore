@@ -1,0 +1,103 @@
+openapi: 3.1.0
+info:
+  title: Anchore Enterprise Images Vulnerabilities API
+  description: REST API for Anchore Enterprise providing image analysis, vulnerability scanning, policy evaluation, SBOM generation, and subscription management for enterprise container security workflows.
+  version: '2.0'
+  contact:
+    name: Anchore Support
+    url: https://anchore.com/support/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://anchore.example.com/v2
+  description: Anchore Enterprise API
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Vulnerabilities
+paths:
+  /images/{imageDigest}/vuln/{vtype}:
+    get:
+      operationId: getImageVulnerabilities
+      summary: Anchore Enterprise Get Image Vulnerabilities
+      description: Get vulnerabilities for an analyzed image
+      tags:
+      - Vulnerabilities
+      parameters:
+      - name: imageDigest
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: vtype
+        in: path
+        required: true
+        schema:
+          type: string
+          enum:
+          - os
+          - non-os
+          - all
+      - name: force_refresh
+        in: query
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: Image vulnerability report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VulnerabilityReport'
+components:
+  schemas:
+    Vulnerability:
+      type: object
+      properties:
+        vuln:
+          type: string
+          description: CVE or vulnerability identifier
+        severity:
+          type: string
+          enum:
+          - Critical
+          - High
+          - Medium
+          - Low
+          - Negligible
+          - Unknown
+        package:
+          type: string
+        packageVersion:
+          type: string
+        packageType:
+          type: string
+        fix:
+          type: string
+        url:
+          type: string
+          format: uri
+        feedGroup:
+          type: string
+        packagePath:
+          type: string
+    VulnerabilityReport:
+      type: object
+      properties:
+        imageDigest:
+          type: string
+        vulnerabilityType:
+          type: string
+        vulnerabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vulnerability'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: http
+      scheme: bearer

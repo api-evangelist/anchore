@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  title: Anchore Enterprise Images Registries API
+  description: REST API for Anchore Enterprise providing image analysis, vulnerability scanning, policy evaluation, SBOM generation, and subscription management for enterprise container security workflows.
+  version: '2.0'
+  contact:
+    name: Anchore Support
+    url: https://anchore.com/support/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://anchore.example.com/v2
+  description: Anchore Enterprise API
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Registries
+paths:
+  /registries:
+    get:
+      operationId: listRegistries
+      summary: Anchore Enterprise List Registries
+      description: List all configured container registries
+      tags:
+      - Registries
+      responses:
+        '200':
+          description: List of registries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegistryConfiguration'
+components:
+  schemas:
+    RegistryConfiguration:
+      type: object
+      properties:
+        registry:
+          type: string
+        registryType:
+          type: string
+          enum:
+          - docker_v2
+          - awsecr
+          - gcr
+        registryUser:
+          type: string
+        registryVerifySsl:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: http
+      scheme: bearer

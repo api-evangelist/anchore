@@ -1,0 +1,156 @@
+openapi: 3.1.0
+info:
+  title: Anchore Enterprise Images Policies API
+  description: REST API for Anchore Enterprise providing image analysis, vulnerability scanning, policy evaluation, SBOM generation, and subscription management for enterprise container security workflows.
+  version: '2.0'
+  contact:
+    name: Anchore Support
+    url: https://anchore.com/support/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+- url: https://anchore.example.com/v2
+  description: Anchore Enterprise API
+security:
+- basicAuth: []
+- bearerAuth: []
+tags:
+- name: Policies
+paths:
+  /images/{imageDigest}/check:
+    get:
+      operationId: checkImagePolicy
+      summary: Anchore Enterprise Check Image Policy
+      description: Evaluate policy compliance for an analyzed image
+      tags:
+      - Policies
+      parameters:
+      - name: imageDigest
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: policyId
+        in: query
+        schema:
+          type: string
+      - name: tag
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Policy evaluation result
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PolicyEvaluation'
+  /policies:
+    get:
+      operationId: listPolicies
+      summary: Anchore Enterprise List Policies
+      description: List all security policies configured in Anchore Enterprise
+      tags:
+      - Policies
+      responses:
+        '200':
+          description: List of policies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Policy'
+    post:
+      operationId: createPolicy
+      summary: Anchore Enterprise Create Policy
+      description: Create a new security policy
+      tags:
+      - Policies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy'
+      responses:
+        '200':
+          description: Created policy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+components:
+  schemas:
+    PolicyRule:
+      type: object
+      properties:
+        id:
+          type: string
+        gate:
+          type: string
+        trigger:
+          type: string
+        action:
+          type: string
+          enum:
+          - stop
+          - warn
+          - go
+        parameters:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+    PolicyEvaluation:
+      type: object
+      properties:
+        imageDigest:
+          type: string
+        evaluationId:
+          type: string
+        policyId:
+          type: string
+        finalAction:
+          type: string
+          enum:
+          - stop
+          - warn
+          - go
+        finalActionReason:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    Policy:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        active:
+          type: boolean
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyRule'
+        createdAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: http
+      scheme: bearer
