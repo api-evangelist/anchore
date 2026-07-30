@@ -7,7 +7,20 @@ description: Anchore is a container and software supply chain security company p
   and reporting. Anchore supports CycloneDX and SPDX SBOM formats and integrates with Docker, Kubernetes, GitHub Actions,
   Jenkins, and major cloud registries.
 type: Index
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/anchore.png
 tags:
 - Container Security
 - Containers
@@ -19,20 +32,206 @@ created: '2026-03-26'
 modified: '2026-05-19'
 specificationVersion: '0.19'
 apis:
-- aid: anchore:anchore-enterprise-api
-  name: Anchore Enterprise API
-  description: REST API for Anchore Enterprise providing image analysis, vulnerability scanning, policy evaluation, SBOM generation,
-    subscription management, and reporting endpoints for enterprise container security workflows.
+- aid: anchore:anchore-images-api
+  name: Anchore Images API
+  description: The Images API from Anchore — 2 operation(s) for images.
   humanURL: https://docs.anchore.com/current/docs/using/api_usage/
   baseURL: https://anchore.example.com/v2
   tags:
-  - Container Security
-  - Enterprise
-  - Policy
-  - Vulnerability Scanning
+  - Images
   properties:
   - type: OpenAPI
-    url: openapi/anchore-enterprise-api.yaml
+    url: openapi/anchore-images-api-openapi.yml
+  - type: Documentation
+    url: https://docs.anchore.com/current/docs/using/api_usage/
+  - type: JSONSchema
+    url: json-schema/anchore-image-schema.json
+  - type: JSONSchema
+    url: json-schema/anchore-vulnerability-schema.json
+  - type: JSONSchema
+    url: json-schema/anchore-sbom-schema.json
+  - type: SpectralRules
+    url: rules/anchore-spectral-rules.yml
+  - type: JSONStructure
+    url: json-structure/anchore-image-structure.json
+  - type: JSONLD
+    url: json-ld/anchore-enterprise-api-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/anchore-vocabulary.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-images.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-policies.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-registries.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-sbom.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-subscriptions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-vulnerabilities.yaml
+- aid: anchore:anchore-policies-api
+  name: Anchore Policies API
+  description: The Policies API from Anchore — 2 operation(s) for policies.
+  humanURL: https://docs.anchore.com/current/docs/using/api_usage/
+  baseURL: https://anchore.example.com/v2
+  tags:
+  - Policies
+  properties:
+  - type: OpenAPI
+    url: openapi/anchore-policies-api-openapi.yml
+  - type: Documentation
+    url: https://docs.anchore.com/current/docs/using/api_usage/
+  - type: JSONSchema
+    url: json-schema/anchore-image-schema.json
+  - type: JSONSchema
+    url: json-schema/anchore-vulnerability-schema.json
+  - type: JSONSchema
+    url: json-schema/anchore-sbom-schema.json
+  - type: SpectralRules
+    url: rules/anchore-spectral-rules.yml
+  - type: JSONStructure
+    url: json-structure/anchore-image-structure.json
+  - type: JSONLD
+    url: json-ld/anchore-enterprise-api-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/anchore-vocabulary.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-images.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-policies.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-registries.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-sbom.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-subscriptions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-vulnerabilities.yaml
+- aid: anchore:anchore-registries-api
+  name: Anchore Registries API
+  description: The Registries API from Anchore — 1 operation(s) for registries.
+  humanURL: https://docs.anchore.com/current/docs/using/api_usage/
+  baseURL: https://anchore.example.com/v2
+  tags:
+  - Registries
+  properties:
+  - type: OpenAPI
+    url: openapi/anchore-registries-api-openapi.yml
+  - type: Documentation
+    url: https://docs.anchore.com/current/docs/using/api_usage/
+  - type: JSONSchema
+    url: json-schema/anchore-image-schema.json
+  - type: JSONSchema
+    url: json-schema/anchore-vulnerability-schema.json
+  - type: JSONSchema
+    url: json-schema/anchore-sbom-schema.json
+  - type: SpectralRules
+    url: rules/anchore-spectral-rules.yml
+  - type: JSONStructure
+    url: json-structure/anchore-image-structure.json
+  - type: JSONLD
+    url: json-ld/anchore-enterprise-api-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/anchore-vocabulary.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-images.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-policies.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-registries.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-sbom.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-subscriptions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-vulnerabilities.yaml
+- aid: anchore:anchore-sbom-api
+  name: Anchore SBOM API
+  description: The SBOM API from Anchore — 1 operation(s) for sbom.
+  humanURL: https://docs.anchore.com/current/docs/using/api_usage/
+  baseURL: https://anchore.example.com/v2
+  tags:
+  - SBOM
+  properties:
+  - type: OpenAPI
+    url: openapi/anchore-sbom-api-openapi.yml
+  - type: Documentation
+    url: https://docs.anchore.com/current/docs/using/api_usage/
+  - type: JSONSchema
+    url: json-schema/anchore-image-schema.json
+  - type: JSONSchema
+    url: json-schema/anchore-vulnerability-schema.json
+  - type: JSONSchema
+    url: json-schema/anchore-sbom-schema.json
+  - type: SpectralRules
+    url: rules/anchore-spectral-rules.yml
+  - type: JSONStructure
+    url: json-structure/anchore-image-structure.json
+  - type: JSONLD
+    url: json-ld/anchore-enterprise-api-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/anchore-vocabulary.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-images.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-policies.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-registries.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-sbom.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-subscriptions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-vulnerabilities.yaml
+- aid: anchore:anchore-subscriptions-api
+  name: Anchore Subscriptions API
+  description: The Subscriptions API from Anchore — 1 operation(s) for subscriptions.
+  humanURL: https://docs.anchore.com/current/docs/using/api_usage/
+  baseURL: https://anchore.example.com/v2
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/anchore-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.anchore.com/current/docs/using/api_usage/
+  - type: JSONSchema
+    url: json-schema/anchore-image-schema.json
+  - type: JSONSchema
+    url: json-schema/anchore-vulnerability-schema.json
+  - type: JSONSchema
+    url: json-schema/anchore-sbom-schema.json
+  - type: SpectralRules
+    url: rules/anchore-spectral-rules.yml
+  - type: JSONStructure
+    url: json-structure/anchore-image-structure.json
+  - type: JSONLD
+    url: json-ld/anchore-enterprise-api-context.jsonld
+  - type: Vocabulary
+    url: vocabulary/anchore-vocabulary.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-images.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-policies.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-registries.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-sbom.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-subscriptions.yaml
+  - type: X-NaftikoCapability
+    url: capabilities/enterprise-vulnerabilities.yaml
+- aid: anchore:anchore-vulnerabilities-api
+  name: Anchore Vulnerabilities API
+  description: The Vulnerabilities API from Anchore — 1 operation(s) for vulnerabilities.
+  humanURL: https://docs.anchore.com/current/docs/using/api_usage/
+  baseURL: https://anchore.example.com/v2
+  tags:
+  - Vulnerabilities
+  properties:
+  - type: OpenAPI
+    url: openapi/anchore-vulnerabilities-api-openapi.yml
   - type: Documentation
     url: https://docs.anchore.com/current/docs/using/api_usage/
   - type: JSONSchema
