@@ -1,0 +1,24 @@
+{
+  "provider": "anchore",
+  "sources": [
+    "anchore-images-api-openapi.yml",
+    "anchore-policies-api-openapi.yml",
+    "anchore-registries-api-openapi.yml",
+    "anchore-sbom-api-openapi.yml",
+    "anchore-subscriptions-api-openapi.yml",
+    "anchore-vulnerabilities-api-openapi.yml"
+  ],
+  "outputs": [
+    "anchore-images-api-openapi.yml",
+    "anchore-policies-api-openapi.yml",
+    "anchore-registries-api-openapi.yml",
+    "anchore-sbom-api-openapi.yml",
+    "anchore-subscriptions-api-openapi.yml",
+    "anchore-vulnerabilities-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

@@ -1,0 +1,537 @@
+openapi: '3.1.0'
+info:
+  title: Anchore Enterprise API
+  description: >-
+    REST API for Anchore Enterprise providing image analysis, vulnerability scanning,
+    policy evaluation, SBOM generation, and subscription management for enterprise
+    container security workflows.
+  version: '2.0'
+  contact:
+    name: Anchore Support
+    url: https://anchore.com/support/
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+servers:
+  - url: https://anchore.example.com/v2
+    description: Anchore Enterprise API
+
+paths:
+  /images:
+    get:
+      operationId: listImages
+      summary: Anchore Enterprise List Images
+      description: List all images analyzed by Anchore Enterprise
+      tags:
+        - Images
+      parameters:
+        - name: tag
+          in: query
+          schema:
+            type: string
+          description: Filter by image tag
+        - name: image_status
+          in: query
+          schema:
+            type: string
+            enum: [active, inactive, deleting]
+      responses:
+        '200':
+          description: List of analyzed images
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnchoreImage'
+    post:
+      operationId: addImage
+      summary: Anchore Enterprise Add Image
+      description: Submit an image for analysis
+      tags:
+        - Images
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageAnalysisRequest'
+      responses:
+        '202':
+          description: Image analysis queued
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AnchoreImage'
+
+  /images/{imageDigest}:
+    get:
+      operationId: getImage
+      summary: Anchore Enterprise Get Image
+      description: Get details for a specific analyzed image
+      tags:
+        - Images
+      parameters:
+        - name: imageDigest
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Image details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnchoreImage'
+
+  /images/{imageDigest}/vuln/{vtype}:
+    get:
+      operationId: getImageVulnerabilities
+      summary: Anchore Enterprise Get Image Vulnerabilities
+      description: Get vulnerabilities for an analyzed image
+      tags:
+        - Vulnerabilities
+      parameters:
+        - name: imageDigest
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: vtype
+          in: path
+          required: true
+          schema:
+            type: string
+            enum: [os, non-os, all]
+        - name: force_refresh
+          in: query
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: Image vulnerability report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VulnerabilityReport'
+
+  /images/{imageDigest}/check:
+    get:
+      operationId: checkImagePolicy
+      summary: Anchore Enterprise Check Image Policy
+      description: Evaluate policy compliance for an analyzed image
+      tags:
+        - Policies
+      parameters:
+        - name: imageDigest
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: policyId
+          in: query
+          schema:
+            type: string
+        - name: tag
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Policy evaluation result
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PolicyEvaluation'
+
+  /images/{imageDigest}/sbom:
+    get:
+      operationId: getImageSbom
+      summary: Anchore Enterprise Get Image SBOM
+      description: Retrieve the Software Bill of Materials for an analyzed image
+      tags:
+        - SBOM
+      parameters:
+        - name: imageDigest
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Image SBOM in CycloneDX format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SBOM'
+
+  /policies:
+    get:
+      operationId: listPolicies
+      summary: Anchore Enterprise List Policies
+      description: List all security policies configured in Anchore Enterprise
+      tags:
+        - Policies
+      responses:
+        '200':
+          description: List of policies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Policy'
+    post:
+      operationId: createPolicy
+      summary: Anchore Enterprise Create Policy
+      description: Create a new security policy
+      tags:
+        - Policies
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Policy'
+      responses:
+        '200':
+          description: Created policy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Policy'
+
+  /subscriptions:
+    get:
+      operationId: listSubscriptions
+      summary: Anchore Enterprise List Subscriptions
+      description: List all active subscriptions for image event notifications
+      tags:
+        - Subscriptions
+      responses:
+        '200':
+          description: List of subscriptions
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subscription'
+    post:
+      operationId: createSubscription
+      summary: Anchore Enterprise Create Subscription
+      description: Subscribe to events for an image tag
+      tags:
+        - Subscriptions
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionRequest'
+      responses:
+        '200':
+          description: Created subscription
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+
+  /registries:
+    get:
+      operationId: listRegistries
+      summary: Anchore Enterprise List Registries
+      description: List all configured container registries
+      tags:
+        - Registries
+      responses:
+        '200':
+          description: List of registries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RegistryConfiguration'
+
+components:
+  schemas:
+    AnchoreImage:
+      type: object
+      properties:
+        imageDigest:
+          type: string
+          description: Unique SHA256 digest of the image
+        analysisStatus:
+          type: string
+          enum: [not_analyzed, analyzing, analyzed, analysis_failed]
+        imageStatus:
+          type: string
+          enum: [active, inactive, deleting]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        imageContent:
+          $ref: '#/components/schemas/ImageContent'
+
+    ImageContent:
+      type: object
+      properties:
+        metadata:
+          type: object
+          properties:
+            arch:
+              type: string
+            distro:
+              type: string
+            distroVersion:
+              type: string
+            dockerfile:
+              type: string
+            imageSize:
+              type: integer
+            layerCount:
+              type: integer
+
+    ImageAnalysisRequest:
+      type: object
+      required:
+        - tag
+      properties:
+        tag:
+          type: string
+          description: Image tag to analyze (e.g. docker.io/library/nginx:latest)
+        digest:
+          type: string
+          description: Optional image digest for pinned analysis
+        dockerfile:
+          type: string
+          description: Base64-encoded Dockerfile content
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
+
+    Vulnerability:
+      type: object
+      properties:
+        vuln:
+          type: string
+          description: CVE or vulnerability identifier
+        severity:
+          type: string
+          enum: [Critical, High, Medium, Low, Negligible, Unknown]
+        package:
+          type: string
+        packageVersion:
+          type: string
+        packageType:
+          type: string
+        fix:
+          type: string
+        url:
+          type: string
+          format: uri
+        feedGroup:
+          type: string
+        packagePath:
+          type: string
+
+    VulnerabilityReport:
+      type: object
+      properties:
+        imageDigest:
+          type: string
+        vulnerabilityType:
+          type: string
+        vulnerabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vulnerability'
+
+    PolicyEvaluation:
+      type: object
+      properties:
+        imageDigest:
+          type: string
+        evaluationId:
+          type: string
+        policyId:
+          type: string
+        finalAction:
+          type: string
+          enum: [stop, warn, go]
+        finalActionReason:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+
+    Policy:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        active:
+          type: boolean
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyRule'
+        createdAt:
+          type: string
+          format: date-time
+
+    PolicyRule:
+      type: object
+      properties:
+        id:
+          type: string
+        gate:
+          type: string
+        trigger:
+          type: string
+        action:
+          type: string
+          enum: [stop, warn, go]
+        parameters:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              value:
+                type: string
+
+    SBOM:
+      type: object
+      description: Software Bill of Materials in CycloneDX format
+      properties:
+        bomFormat:
+          type: string
+        specVersion:
+          type: string
+        serialNumber:
+          type: string
+        version:
+          type: integer
+        metadata:
+          type: object
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/SBOMComponent'
+
+    SBOMComponent:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [application, framework, library, container, device, firmware]
+        name:
+          type: string
+        version:
+          type: string
+        purl:
+          type: string
+        licenses:
+          type: array
+          items:
+            type: object
+            properties:
+              license:
+                type: object
+                properties:
+                  id:
+                    type: string
+        hashes:
+          type: array
+          items:
+            type: object
+            properties:
+              alg:
+                type: string
+              content:
+                type: string
+
+    Subscription:
+      type: object
+      properties:
+        subscriptionId:
+          type: string
+        subscriptionType:
+          type: string
+          enum: [tag_update, policy_eval, vuln_update, analysis_update]
+        subscriptionKey:
+          type: string
+        active:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    SubscriptionRequest:
+      type: object
+      required:
+        - subscriptionType
+        - subscriptionKey
+      properties:
+        subscriptionType:
+          type: string
+          enum: [tag_update, policy_eval, vuln_update, analysis_update]
+        subscriptionKey:
+          type: string
+          description: Image tag to subscribe to
+
+    RegistryConfiguration:
+      type: object
+      properties:
+        registry:
+          type: string
+        registryType:
+          type: string
+          enum: [docker_v2, awsecr, gcr]
+        registryUser:
+          type: string
+        registryVerifySsl:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+        errType:
+          type: string
+        message:
+          type: string
+        detail:
+          type: object
+
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+security:
+  - basicAuth: []
+  - bearerAuth: []
