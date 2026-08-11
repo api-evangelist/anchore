@@ -58,18 +58,6 @@ apis:
     url: json-ld/anchore-enterprise-api-context.jsonld
   - type: Vocabulary
     url: vocabulary/anchore-vocabulary.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-images.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-policies.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-registries.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-sbom.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-subscriptions.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-vulnerabilities.yaml
 - aid: anchore:anchore-policies-api
   name: Anchore Policies API
   description: The Policies API from Anchore — 2 operation(s) for policies.
@@ -96,18 +84,6 @@ apis:
     url: json-ld/anchore-enterprise-api-context.jsonld
   - type: Vocabulary
     url: vocabulary/anchore-vocabulary.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-images.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-policies.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-registries.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-sbom.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-subscriptions.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-vulnerabilities.yaml
 - aid: anchore:anchore-registries-api
   name: Anchore Registries API
   description: The Registries API from Anchore — 1 operation(s) for registries.
@@ -134,18 +110,6 @@ apis:
     url: json-ld/anchore-enterprise-api-context.jsonld
   - type: Vocabulary
     url: vocabulary/anchore-vocabulary.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-images.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-policies.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-registries.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-sbom.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-subscriptions.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-vulnerabilities.yaml
 - aid: anchore:anchore-sbom-api
   name: Anchore SBOM API
   description: The SBOM API from Anchore — 1 operation(s) for sbom.
@@ -172,18 +136,6 @@ apis:
     url: json-ld/anchore-enterprise-api-context.jsonld
   - type: Vocabulary
     url: vocabulary/anchore-vocabulary.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-images.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-policies.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-registries.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-sbom.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-subscriptions.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-vulnerabilities.yaml
 - aid: anchore:anchore-subscriptions-api
   name: Anchore Subscriptions API
   description: The Subscriptions API from Anchore — 1 operation(s) for subscriptions.
@@ -210,18 +162,6 @@ apis:
     url: json-ld/anchore-enterprise-api-context.jsonld
   - type: Vocabulary
     url: vocabulary/anchore-vocabulary.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-images.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-policies.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-registries.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-sbom.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-subscriptions.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-vulnerabilities.yaml
 - aid: anchore:anchore-vulnerabilities-api
   name: Anchore Vulnerabilities API
   description: The Vulnerabilities API from Anchore — 1 operation(s) for vulnerabilities.
@@ -248,18 +188,6 @@ apis:
     url: json-ld/anchore-enterprise-api-context.jsonld
   - type: Vocabulary
     url: vocabulary/anchore-vocabulary.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-images.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-policies.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-registries.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-sbom.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-subscriptions.yaml
-  - type: X-NaftikoCapability
-    url: capabilities/enterprise-vulnerabilities.yaml
 common:
   - type: AgenticAccess
     url: agentic-access/anchore-agentic-access.yml
