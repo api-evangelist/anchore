@@ -1,0 +1,53 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anchore Enterprise Images Vulnerabilities API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Vulnerabilities",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Anchore Enterprise Get Image Vulnerabilities",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://anchore.example.com/v2/images/:imageDigest/vuln/:vtype",
+            "params": [
+              {
+                "name": "imageDigest",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "vtype",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "force_refresh",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Get vulnerabilities for an analyzed image"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,79 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anchore Enterprise Images Policies API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Policies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Anchore Enterprise Check Image Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://anchore.example.com/v2/images/:imageDigest/check",
+            "params": [
+              {
+                "name": "imageDigest",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "policyId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Evaluate policy compliance for an analyzed image"
+        },
+        {
+          "info": {
+            "name": "Anchore Enterprise List Policies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://anchore.example.com/v2/policies"
+          },
+          "docs": "List all security policies configured in Anchore Enterprise"
+        },
+        {
+          "info": {
+            "name": "Anchore Enterprise Create Policy",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://anchore.example.com/v2/policies",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new security policy"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

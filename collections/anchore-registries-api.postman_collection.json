@@ -1,0 +1,123 @@
+{
+  "item": [
+    {
+      "id": "55c356f2-5aa0-4d24-8abe-6858d96af01b",
+      "name": "Registries",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "15b120bf-f2f1-4418-b418-f768a3b4d9f7",
+          "name": "Anchore Enterprise List Registries",
+          "request": {
+            "name": "Anchore Enterprise List Registries",
+            "description": {
+              "content": "List all configured container registries",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "registries"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "509957b3-4487-432c-885e-fc44df6f7c48",
+              "name": "List of registries",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "registries"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"registry\": \"string\",\n    \"registryType\": \"gcr\",\n    \"registryUser\": \"string\",\n    \"registryVerifySsl\": false,\n    \"createdAt\": \"1982-11-18T10:53:04.002Z\"\n  },\n  {\n    \"registry\": \"string\",\n    \"registryType\": \"docker_v2\",\n    \"registryUser\": \"string\",\n    \"registryVerifySsl\": true,\n    \"createdAt\": \"2022-04-04T20:54:31.598Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://anchore.example.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "8d60a7ca-e4e1-4a0c-8313-c3c48d7f9002",
+    "name": "Anchore Enterprise Images Registries API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Anchore Enterprise providing image analysis, vulnerability scanning, policy evaluation, SBOM generation, and subscription management for enterprise container security workflows.\n\nContact Support:\n Name: Anchore Support",
+      "type": "text/plain"
+    }
+  }
+}

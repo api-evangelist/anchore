@@ -1,0 +1,143 @@
+{
+  "item": [
+    {
+      "id": "d0d95d7c-aec9-4ee8-b363-73b68b731fd8",
+      "name": "SBOM",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "79d97d1a-c9cf-4b83-b8f0-1403940febd0",
+          "name": "Anchore Enterprise Get Image SBOM",
+          "request": {
+            "name": "Anchore Enterprise Get Image SBOM",
+            "description": {
+              "content": "Retrieve the Software Bill of Materials for an analyzed image",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                ":imageDigest",
+                "sbom"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "imageDigest",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "0c05c256-d210-4eb6-912a-6b640ab86a97",
+              "name": "Image SBOM in CycloneDX format",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":imageDigest",
+                    "sbom"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imageDigest",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"bomFormat\": \"string\",\n  \"specVersion\": \"string\",\n  \"serialNumber\": \"string\",\n  \"version\": 5404,\n  \"metadata\": {},\n  \"components\": [\n    {\n      \"type\": \"device\",\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"purl\": \"string\",\n      \"licenses\": [\n        {\n          \"license\": {\n            \"id\": \"string\"\n          }\n        },\n        {\n          \"license\": {\n            \"id\": \"string\"\n          }\n        }\n      ],\n      \"hashes\": [\n        {\n          \"alg\": \"string\",\n          \"content\": \"string\"\n        },\n        {\n          \"alg\": \"string\",\n          \"content\": \"string\"\n        }\n      ]\n    },\n    {\n      \"type\": \"firmware\",\n      \"name\": \"string\",\n      \"version\": \"string\",\n      \"purl\": \"string\",\n      \"licenses\": [\n        {\n          \"license\": {\n            \"id\": \"string\"\n          }\n        },\n        {\n          \"license\": {\n            \"id\": \"string\"\n          }\n        }\n      ],\n      \"hashes\": [\n        {\n          \"alg\": \"string\",\n          \"content\": \"string\"\n        },\n        {\n          \"alg\": \"string\",\n          \"content\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://anchore.example.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "26229072-f80b-4571-972b-1cda3988a74b",
+    "name": "Anchore Enterprise Images SBOM API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Anchore Enterprise providing image analysis, vulnerability scanning, policy evaluation, SBOM generation, and subscription management for enterprise container security workflows.\n\nContact Support:\n Name: Anchore Support",
+      "type": "text/plain"
+    }
+  }
+}

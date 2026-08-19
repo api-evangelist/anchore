@@ -1,0 +1,51 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anchore Enterprise Images Subscriptions API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Anchore Enterprise List Subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://anchore.example.com/v2/subscriptions"
+          },
+          "docs": "List all active subscriptions for image event notifications"
+        },
+        {
+          "info": {
+            "name": "Anchore Enterprise Create Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://anchore.example.com/v2/subscriptions",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Subscribe to events for an image tag"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

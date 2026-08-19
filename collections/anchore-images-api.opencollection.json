@@ -1,0 +1,82 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anchore Enterprise Images API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Images",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Anchore Enterprise List Images",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://anchore.example.com/v2/images",
+            "params": [
+              {
+                "name": "tag",
+                "value": "",
+                "type": "query",
+                "description": "Filter by image tag"
+              },
+              {
+                "name": "image_status",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "List all images analyzed by Anchore Enterprise"
+        },
+        {
+          "info": {
+            "name": "Anchore Enterprise Add Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://anchore.example.com/v2/images",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Submit an image for analysis"
+        },
+        {
+          "info": {
+            "name": "Anchore Enterprise Get Image",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://anchore.example.com/v2/images/:imageDigest",
+            "params": [
+              {
+                "name": "imageDigest",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get details for a specific analyzed image"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

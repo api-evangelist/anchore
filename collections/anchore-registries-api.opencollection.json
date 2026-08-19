@@ -1,0 +1,36 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Anchore Enterprise Images Registries API",
+    "version": "2.0"
+  },
+  "request": {
+    "auth": {
+      "type": "basic",
+      "username": "{{username}}",
+      "password": "{{password}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Registries",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Anchore Enterprise List Registries",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://anchore.example.com/v2/registries"
+          },
+          "docs": "List all configured container registries"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

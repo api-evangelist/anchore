@@ -1,0 +1,340 @@
+{
+  "item": [
+    {
+      "id": "ec5ab264-2916-4579-882d-81954baa6057",
+      "name": "Policies",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fc16bd2d-2de3-4ce6-b81f-f5f772432c81",
+          "name": "Anchore Enterprise Check Image Policy",
+          "request": {
+            "name": "Anchore Enterprise Check Image Policy",
+            "description": {
+              "content": "Evaluate policy compliance for an analyzed image",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                ":imageDigest",
+                "check"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "policyId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "tag",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "imageDigest",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dee1a781-d56b-478f-b1f2-2a83f4e1b2db",
+              "name": "Policy evaluation result",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":imageDigest",
+                    "check"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "policyId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "tag",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imageDigest",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"imageDigest\": \"string\",\n    \"evaluationId\": \"string\",\n    \"policyId\": \"string\",\n    \"finalAction\": \"stop\",\n    \"finalActionReason\": \"string\",\n    \"createdAt\": \"1973-11-28T09:25:15.197Z\"\n  },\n  {\n    \"imageDigest\": \"string\",\n    \"evaluationId\": \"string\",\n    \"policyId\": \"string\",\n    \"finalAction\": \"warn\",\n    \"finalActionReason\": \"string\",\n    \"createdAt\": \"1983-06-23T02:30:41.450Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3eed77b4-5b2b-4816-b083-fd829f7d03c2",
+          "name": "Anchore Enterprise List Policies",
+          "request": {
+            "name": "Anchore Enterprise List Policies",
+            "description": {
+              "content": "List all security policies configured in Anchore Enterprise",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "policies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "e998ba14-4d3d-41a3-8810-8032ceabbf12",
+              "name": "List of policies",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"active\": false,\n    \"rules\": [\n      {\n        \"id\": \"string\",\n        \"gate\": \"string\",\n        \"trigger\": \"string\",\n        \"action\": \"warn\",\n        \"parameters\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"gate\": \"string\",\n        \"trigger\": \"string\",\n        \"action\": \"warn\",\n        \"parameters\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"createdAt\": \"2015-04-20T16:54:53.317Z\"\n  },\n  {\n    \"id\": \"string\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"active\": false,\n    \"rules\": [\n      {\n        \"id\": \"string\",\n        \"gate\": \"string\",\n        \"trigger\": \"string\",\n        \"action\": \"stop\",\n        \"parameters\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      },\n      {\n        \"id\": \"string\",\n        \"gate\": \"string\",\n        \"trigger\": \"string\",\n        \"action\": \"go\",\n        \"parameters\": [\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          },\n          {\n            \"name\": \"string\",\n            \"value\": \"string\"\n          }\n        ]\n      }\n    ],\n    \"createdAt\": \"2010-04-27T16:09:59.307Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1ef92cc5-81a0-4666-abd0-882cf1c76128",
+          "name": "Anchore Enterprise Create Policy",
+          "request": {
+            "name": "Anchore Enterprise Create Policy",
+            "description": {
+              "content": "Create a new security policy",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "policies"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"rules\": [\n    {\n      \"id\": \"<string>\",\n      \"gate\": \"<string>\",\n      \"trigger\": \"<string>\",\n      \"action\": \"<string>\",\n      \"parameters\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    },\n    {\n      \"id\": \"<string>\",\n      \"gate\": \"<string>\",\n      \"trigger\": \"<string>\",\n      \"action\": \"<string>\",\n      \"parameters\": [\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        },\n        {\n          \"name\": \"<string>\",\n          \"value\": \"<string>\"\n        }\n      ]\n    }\n  ],\n  \"createdAt\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "072e9ddf-2c86-421f-a657-0fda36e5c1ee",
+              "name": "Created policy",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "policies"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"active\": \"<boolean>\",\n  \"rules\": [\n    {\n      \"id\": \"string\",\n      \"gate\": \"string\",\n      \"trigger\": \"string\",\n      \"action\": \"go\",\n      \"parameters\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"gate\": \"string\",\n      \"trigger\": \"string\",\n      \"action\": \"go\",\n      \"parameters\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"createdAt\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"active\": true,\n  \"rules\": [\n    {\n      \"id\": \"string\",\n      \"gate\": \"string\",\n      \"trigger\": \"string\",\n      \"action\": \"go\",\n      \"parameters\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"gate\": \"string\",\n      \"trigger\": \"string\",\n      \"action\": \"go\",\n      \"parameters\": [\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"name\": \"string\",\n          \"value\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"createdAt\": \"1984-11-10T14:50:20.089Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://anchore.example.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5171780a-ff7b-4234-a258-8e695ee1b2ba",
+    "name": "Anchore Enterprise Images Policies API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Anchore Enterprise providing image analysis, vulnerability scanning, policy evaluation, SBOM generation, and subscription management for enterprise container security workflows.\n\nContact Support:\n Name: Anchore Support",
+      "type": "text/plain"
+    }
+  }
+}

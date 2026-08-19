@@ -1,0 +1,170 @@
+{
+  "item": [
+    {
+      "id": "9f726556-c25b-4061-81ce-1eb292c3c62c",
+      "name": "Vulnerabilities",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1ec8ffe9-012d-40bb-9687-6d43e4aff1eb",
+          "name": "Anchore Enterprise Get Image Vulnerabilities",
+          "request": {
+            "name": "Anchore Enterprise Get Image Vulnerabilities",
+            "description": {
+              "content": "Get vulnerabilities for an analyzed image",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "images",
+                ":imageDigest",
+                "vuln",
+                ":vtype"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "force_refresh",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "imageDigest",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "vtype",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "803c9c1e-adce-4592-befb-56fe6bfc4f63",
+              "name": "Image vulnerability report",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "images",
+                    ":imageDigest",
+                    "vuln",
+                    ":vtype"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "force_refresh",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "imageDigest",
+                      "description": "(Required) "
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "vtype",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"imageDigest\": \"string\",\n  \"vulnerabilityType\": \"string\",\n  \"vulnerabilities\": [\n    {\n      \"vuln\": \"string\",\n      \"severity\": \"Unknown\",\n      \"package\": \"string\",\n      \"packageVersion\": \"string\",\n      \"packageType\": \"string\",\n      \"fix\": \"string\",\n      \"url\": \"http://HKqxfKTMMafDgfIlQatWYyBygwXWAshLq.grexjDB2KIIS8xzF,2riq7MddbzBnUtNz0ana,zyJXfi5z6VKe0P1OevB\",\n      \"feedGroup\": \"string\",\n      \"packagePath\": \"string\"\n    },\n    {\n      \"vuln\": \"string\",\n      \"severity\": \"Negligible\",\n      \"package\": \"string\",\n      \"packageVersion\": \"string\",\n      \"packageType\": \"string\",\n      \"fix\": \"string\",\n      \"url\": \"https://szJlSbhsTotxGdJJqzGjrx.oqrqsDw4tl8yUWu.EfEcyp2RcPf,Z+0Souu.aD.orgrvgePD\",\n      \"feedGroup\": \"string\",\n      \"packagePath\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://anchore.example.com/v2",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "basic",
+    "basic": [
+      {
+        "key": "username",
+        "value": "{{basicAuthUsername}}"
+      },
+      {
+        "key": "password",
+        "value": "{{basicAuthPassword}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "03a932d2-efa7-43ec-bf67-c83fc5966a9c",
+    "name": "Anchore Enterprise Images Vulnerabilities API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Anchore Enterprise providing image analysis, vulnerability scanning, policy evaluation, SBOM generation, and subscription management for enterprise container security workflows.\n\nContact Support:\n Name: Anchore Support",
+      "type": "text/plain"
+    }
+  }
+}
