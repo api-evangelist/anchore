@@ -38,6 +38,8 @@ apis:
   humanURL: https://docs.anchore.com/current/docs/using/api_usage/
   baseURL: https://anchore.example.com/v2
   tags:
+  - Image
+  tags_raw:
   - Images
   properties:
   - type: OpenAPI
@@ -142,6 +144,8 @@ apis:
   humanURL: https://docs.anchore.com/current/docs/using/api_usage/
   baseURL: https://anchore.example.com/v2
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
