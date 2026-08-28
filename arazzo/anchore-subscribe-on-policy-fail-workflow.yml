@@ -13,8 +13,11 @@ info:
     description.
   version: 1.0.0
 sourceDescriptions:
-- name: anchoreApi
-  url: ../openapi/anchore-enterprise-api.yaml
+- name: policiesApi
+  url: ../openapi/anchore-policies-api-openapi.yml
+  type: openapi
+- name: subscriptionsApi
+  url: ../openapi/anchore-subscriptions-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: subscribe-on-policy-failure

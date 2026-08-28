@@ -15,8 +15,11 @@ info:
     opening the underlying OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: anchoreApi
-  url: ../openapi/anchore-enterprise-api.yaml
+- name: imagesApi
+  url: ../openapi/anchore-images-api-openapi.yml
+  type: openapi
+- name: registriesApi
+  url: ../openapi/anchore-registries-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: registry-image-onboarding

@@ -13,8 +13,14 @@ info:
     OpenAPI description.
   version: 1.0.0
 sourceDescriptions:
-- name: anchoreApi
-  url: ../openapi/anchore-enterprise-api.yaml
+- name: imagesApi
+  url: ../openapi/anchore-images-api-openapi.yml
+  type: openapi
+- name: policiesApi
+  url: ../openapi/anchore-policies-api-openapi.yml
+  type: openapi
+- name: vulnerabilitiesApi
+  url: ../openapi/anchore-vulnerabilities-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: analyze-image-end-to-end
