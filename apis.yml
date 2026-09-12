@@ -207,6 +207,8 @@ apis:
   - type: Vocabulary
     url: vocabulary/anchore-vocabulary.yaml
 common:
+  - type: Website
+    url: https://www.anchore.com/
   - type: AgenticAccess
     url: agentic-access/anchore-agentic-access.yml
   - type: DomainSecurity
