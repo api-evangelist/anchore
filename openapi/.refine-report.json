@@ -1,12 +1,7 @@
 {
   "provider": "anchore",
   "sources": [
-    "anchore-images-api-openapi.yml",
-    "anchore-policies-api-openapi.yml",
-    "anchore-registries-api-openapi.yml",
-    "anchore-sbom-api-openapi.yml",
-    "anchore-subscriptions-api-openapi.yml",
-    "anchore-vulnerabilities-api-openapi.yml"
+    "_original/anchore-enterprise-api.yaml"
   ],
   "outputs": [
     "anchore-images-api-openapi.yml",
@@ -19,6 +14,23 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "anchore-enterprise-api.yaml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "anchore-enterprise-api.yaml: declared missing tag: Images",
+    "anchore-enterprise-api.yaml: declared missing tag: Policies",
+    "anchore-enterprise-api.yaml: declared missing tag: Registries",
+    "anchore-enterprise-api.yaml: declared missing tag: SBOM",
+    "anchore-enterprise-api.yaml: declared missing tag: Subscriptions",
+    "anchore-enterprise-api.yaml: declared missing tag: Vulnerabilities",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "anchore-images-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "anchore-policies-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "anchore-registries-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "anchore-sbom-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "anchore-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "anchore-vulnerabilities-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
