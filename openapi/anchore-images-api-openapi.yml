@@ -91,6 +91,24 @@ paths:
                 $ref: '#/components/schemas/AnchoreImage'
 components:
   schemas:
+    ImageContent:
+      type: object
+      properties:
+        metadata:
+          type: object
+          properties:
+            arch:
+              type: string
+            distro:
+              type: string
+            distroVersion:
+              type: string
+            dockerfile:
+              type: string
+            imageSize:
+              type: integer
+            layerCount:
+              type: integer
     AnchoreImage:
       type: object
       properties:
@@ -136,24 +154,6 @@ components:
           type: object
           additionalProperties:
             type: string
-    ImageContent:
-      type: object
-      properties:
-        metadata:
-          type: object
-          properties:
-            arch:
-              type: string
-            distro:
-              type: string
-            distroVersion:
-              type: string
-            dockerfile:
-              type: string
-            imageSize:
-              type: integer
-            layerCount:
-              type: integer
   securitySchemes:
     basicAuth:
       type: http

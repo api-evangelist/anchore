@@ -40,6 +40,24 @@ paths:
                 $ref: '#/components/schemas/SBOM'
 components:
   schemas:
+    SBOM:
+      type: object
+      description: Software Bill of Materials in CycloneDX format
+      properties:
+        bomFormat:
+          type: string
+        specVersion:
+          type: string
+        serialNumber:
+          type: string
+        version:
+          type: integer
+        metadata:
+          type: object
+        components:
+          type: array
+          items:
+            $ref: '#/components/schemas/SBOMComponent'
     SBOMComponent:
       type: object
       properties:
@@ -77,24 +95,6 @@ components:
                 type: string
               content:
                 type: string
-    SBOM:
-      type: object
-      description: Software Bill of Materials in CycloneDX format
-      properties:
-        bomFormat:
-          type: string
-        specVersion:
-          type: string
-        serialNumber:
-          type: string
-        version:
-          type: integer
-        metadata:
-          type: object
-        components:
-          type: array
-          items:
-            $ref: '#/components/schemas/SBOMComponent'
   securitySchemes:
     basicAuth:
       type: http

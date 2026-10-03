@@ -85,23 +85,21 @@ paths:
                 $ref: '#/components/schemas/Policy'
 components:
   schemas:
-    PolicyEvaluation:
+    Policy:
       type: object
       properties:
-        imageDigest:
+        id:
           type: string
-        evaluationId:
+        name:
           type: string
-        policyId:
+        description:
           type: string
-        finalAction:
-          type: string
-          enum:
-          - stop
-          - warn
-          - go
-        finalActionReason:
-          type: string
+        active:
+          type: boolean
+        rules:
+          type: array
+          items:
+            $ref: '#/components/schemas/PolicyRule'
         createdAt:
           type: string
           format: date-time
@@ -129,21 +127,23 @@ components:
                 type: string
               value:
                 type: string
-    Policy:
+    PolicyEvaluation:
       type: object
       properties:
-        id:
+        imageDigest:
           type: string
-        name:
+        evaluationId:
           type: string
-        description:
+        policyId:
           type: string
-        active:
-          type: boolean
-        rules:
-          type: array
-          items:
-            $ref: '#/components/schemas/PolicyRule'
+        finalAction:
+          type: string
+          enum:
+          - stop
+          - warn
+          - go
+        finalActionReason:
+          type: string
         createdAt:
           type: string
           format: date-time
