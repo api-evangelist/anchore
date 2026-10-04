@@ -207,6 +207,9 @@ apis:
   - type: Vocabulary
     url: vocabulary/anchore-vocabulary.yaml
 common:
+  - type: CapabilityMap
+    url: capabilities/anchore-capability-edges.yml
+    name: Anchore Business Capability Map
   - type: Website
     url: https://www.anchore.com/
   - type: AgenticAccess
