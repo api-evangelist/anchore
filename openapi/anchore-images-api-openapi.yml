@@ -91,6 +91,24 @@ paths:
                 $ref: '#/components/schemas/AnchoreImage'
 components:
   schemas:
+    ImageAnalysisRequest:
+      type: object
+      required:
+      - tag
+      properties:
+        tag:
+          type: string
+          description: Image tag to analyze (e.g. docker.io/library/nginx:latest)
+        digest:
+          type: string
+          description: Optional image digest for pinned analysis
+        dockerfile:
+          type: string
+          description: Base64-encoded Dockerfile content
+        annotations:
+          type: object
+          additionalProperties:
+            type: string
     ImageContent:
       type: object
       properties:
@@ -136,24 +154,6 @@ components:
           format: date-time
         imageContent:
           $ref: '#/components/schemas/ImageContent'
-    ImageAnalysisRequest:
-      type: object
-      required:
-      - tag
-      properties:
-        tag:
-          type: string
-          description: Image tag to analyze (e.g. docker.io/library/nginx:latest)
-        digest:
-          type: string
-          description: Optional image digest for pinned analysis
-        dockerfile:
-          type: string
-          description: Base64-encoded Dockerfile content
-        annotations:
-          type: object
-          additionalProperties:
-            type: string
   securitySchemes:
     basicAuth:
       type: http
