@@ -7,14 +7,17 @@ front_door_ai:
   probed_at: '2026-09-17'
   host: www.anchore.com
   final_host: anchore.com
-  ownership: inherited
+  ownership: own
   owner: anchore
   shares_host_with: null
-  inherited_from: anchore.com
+  inherited_from: null
+  alias_of: anchore.com
   verdict: silent
-  score: null
+  score: 0
+  band: 1
+  band_label: silent
   host_score: 0
-  density: null
+  density: 0.0
   words: 1190
   tiers:
     agentic: 0
