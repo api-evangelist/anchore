@@ -53,17 +53,6 @@ paths:
                 $ref: '#/components/schemas/VulnerabilityReport'
 components:
   schemas:
-    VulnerabilityReport:
-      type: object
-      properties:
-        imageDigest:
-          type: string
-        vulnerabilityType:
-          type: string
-        vulnerabilities:
-          type: array
-          items:
-            $ref: '#/components/schemas/Vulnerability'
     Vulnerability:
       type: object
       properties:
@@ -94,6 +83,17 @@ components:
           type: string
         packagePath:
           type: string
+    VulnerabilityReport:
+      type: object
+      properties:
+        imageDigest:
+          type: string
+        vulnerabilityType:
+          type: string
+        vulnerabilities:
+          type: array
+          items:
+            $ref: '#/components/schemas/Vulnerability'
   securitySchemes:
     basicAuth:
       type: http

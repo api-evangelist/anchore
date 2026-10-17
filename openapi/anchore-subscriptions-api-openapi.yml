@@ -55,6 +55,22 @@ paths:
                 $ref: '#/components/schemas/Subscription'
 components:
   schemas:
+    SubscriptionRequest:
+      type: object
+      required:
+      - subscriptionType
+      - subscriptionKey
+      properties:
+        subscriptionType:
+          type: string
+          enum:
+          - tag_update
+          - policy_eval
+          - vuln_update
+          - analysis_update
+        subscriptionKey:
+          type: string
+          description: Image tag to subscribe to
     Subscription:
       type: object
       properties:
@@ -74,22 +90,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    SubscriptionRequest:
-      type: object
-      required:
-      - subscriptionType
-      - subscriptionKey
-      properties:
-        subscriptionType:
-          type: string
-          enum:
-          - tag_update
-          - policy_eval
-          - vuln_update
-          - analysis_update
-        subscriptionKey:
-          type: string
-          description: Image tag to subscribe to
   securitySchemes:
     basicAuth:
       type: http
