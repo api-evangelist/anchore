@@ -15,3 +15,32 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: anchore-aws-data-exchange
+  label: AWS Data Exchange
+  partner: amazon-data-exchange
+  partner_name: AWS Data Exchange
+  category: data product listing
+  type: marketplace
+  marketplace: amazon-data-exchange-marketplace
+  channel: distribution
+  evidence: https://aws.amazon.com/marketplace/seller-profile?id=seller-zb3a2rpf5ozek
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: AWS Data Exchange (AWS Marketplace discovery search, FULFILLMENT_OPTION_TYPE=DATA_EXCHANGE + seller-profile
+      sellerWebsiteUrl)
+    spec_file: null
+    role: data-marketplace-seller
+    registered_name: ANCHORE INC
+    matched_domain: anchore.com
+    matched_by: domain+name-among-holders
+    listings: 3
+    sample_listings:
+    - Anchore Policy Packs - DOD
+    - Anchore Policy Packs - FedRAMP
+    - Anchore Policy Packs - Federal
+    signal_note: 'participation: the provider lists data products on this marketplace; counts are context'
+    detected_by: sweep-data-marketplaces.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
