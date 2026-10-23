@@ -1,16 +1,16 @@
 generated: '2026-10-14'
 method: searched
 checked:
+- https://github.com/marketplace?type=actions
 - https://aws.amazon.com/marketplace/search/results?FULFILLMENT_OPTION_TYPE=DATA_EXCHANGE
 - https://catalog.redhat.com/api/containers/v1/operators/bundles?filter=organization==certified-operators
 - https://catalog.redhat.com/api/containers/v1/repositories?page_size=100
 - https://catalog.redhat.com/api/containers/v1/vendors/label/
 - https://catalog.redhat.com/software/partners
-- https://github.com/marketplace?type=actions
+- https://www.bestpractices.dev/en/projects.json
 - https://landscape.cd.foundation/data/full.json
 - https://plugins.jenkins.io/api/plugin/
 - https://plugins.jenkins.io/api/plugins
-- https://www.bestpractices.dev/en/projects.json
 - https://www.bestpractices.dev/en/projects.json?page=N
 marketplace_apps: []
 edges:
@@ -115,6 +115,36 @@ edges:
     detected_by: sweep-red-hat-certified-ecosystem.py
     detected: '2026-10-22'
   detected_by: sweep-red-hat-certified-ecosystem.py
+  first_seen: '2026-10-22'
+- partner_name: CD Foundation (Continuous Delivery Foundation landscape)
+  partner: continuous-delivery-foundation
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  category: Continuous delivery foundation membership / landscape
+  evidence: https://landscape.cd.foundation/
+  contract_reference:
+    register: CD Foundation landscape (landscape.cd.foundation/data/full.json)
+    spec_file: null
+    standard: Continuous Delivery Foundation
+    role: cdf-landscape-listed
+    registered_name: Anchore
+    registered_names:
+    - Anchore
+    website: https://anchore.com/
+    matched_domain: anchore.com
+    matched_by: domain+name-among-holders
+    member_tier: null
+    landscape_categories:
+    - DevSecOps / Container Security
+    cdf_projects: []
+    signal_note: 'participation only: CDF membership or a landscape listing is standard-participant evidence, never
+      depth; tier, categories and entries are context, never counted'
+    detected_by: sweep-jenkins-cd-foundation-plugins.py
+    detected: '2026-10-22'
+  detected_by: sweep-jenkins-cd-foundation-plugins.py
   first_seen: '2026-10-22'
 - partner_name: OpenSSF Best Practices Badge (bestpractices.dev)
   partner: null
